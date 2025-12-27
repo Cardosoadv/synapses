@@ -58,6 +58,24 @@ class CreateRegistrationTables extends Migration
                 'default'    => 'pending',
                 'description' => 'Estado actual do registo do profissional',
             ],
+            'photo' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+                'description' => 'Caminho para o arquivo da foto do profissional',
+            ],
+            'fingerprint' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+                'description' => 'Caminho para o arquivo da impressão digital',
+            ],
+            'signature' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+                'description' => 'Caminho para o arquivo da assinatura',
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
