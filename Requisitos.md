@@ -20,8 +20,8 @@ O Synapses é um sistema de gestão ERP (Enterprise Resource Planning) voltado e
 
 A aplicação adota a separação rigorosa de responsabilidades:
 
-- **Model**: Mapeamento de dados e definição de Entities.
-- **View**: Interface de usuário (Bootstrap 5/Tailwind).
+- **Model**: Abstração das tabelas não deve ter lógica.
+- **View**: Interface de usuário AdminLte usando template.
 - **Controller**: Gerenciamento do fluxo de entrada e respostas.
 - **Repository**: Abstração de queries complexas e persistência de dados.
 - **Service**: Coração do sistema. Toda a lógica de negócios, cálculos de multas, fluxos de contratos e integrações com o SEI! devem residir aqui.

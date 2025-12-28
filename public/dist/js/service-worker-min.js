@@ -1,0 +1,1 @@
+const STATIC_ASSETS=["/public/dist/css/adminlte-min.css","/public/dist/css/style-min.css","/public/dist/js/service-worker-min.js","/public/dist/js/busca_automatica_intimacoes-min.js","/public/dist/js/busca_automatica_movimentos-min.js","/public/dist/js/busca_automatica_processos-min.js","/public/dist/js/intimacoes_receiver-min.js"];
