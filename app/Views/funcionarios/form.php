@@ -55,6 +55,11 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4">
+                            <label class="form-label">CPF</label>
+                            <input type="text" name="cpf" class="form-control"
+                                value="<?= old('cpf', $funcionario['cpf'] ?? '') ?>" placeholder="000.000.000-00">
+                        </div>
+                        <div class="col-md-4">
                             <label class="form-label">Matrícula <span class="text-danger">*</span></label>
                             <input type="text" name="registration_number" class="form-control" required
                                 value="<?= old('registration_number', $funcionario['registration_number'] ?? '') ?>">

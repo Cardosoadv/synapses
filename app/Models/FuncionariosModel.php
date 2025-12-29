@@ -15,8 +15,8 @@ class FuncionariosModel extends BaseModel
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $allowedFields    = [
-        'user_id', 'registration_number', 'position', 'department',
-        'status', 'is_lawyer', 'rateio_ativo', 'oab_numero', 'oab_uf', 'photo',
+        'user_id', 'cpf', 'registration_number', 'position', 'department',
+        'status', 'photo',
         'deleted_at'
     ];
 
@@ -28,8 +28,21 @@ class FuncionariosModel extends BaseModel
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+        'cpf' => 'required|valid_cpf|is_unique[employees.cpf,id,{id}]',
+        'registration_number' => 'required|is_unique[employees.registration_number,id,{id}]',
+    ];
+    protected $validationMessages   = [
+        'cpf' => [
+            'required' => 'O CPF é obrigatório.',
+            'valid_cpf' => 'O CPF informado não é válido.',
+            'is_unique' => 'Este CPF já está cadastrado.'
+        ],
+        'registration_number' => [
+             'required' => 'A matrícula é obrigatória.',
+             'is_unique' => 'Esta matrícula já está em uso.'
+        ]
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
     

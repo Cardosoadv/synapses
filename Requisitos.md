@@ -73,6 +73,12 @@ A aplicação adota a separação rigorosa de responsabilidades:
 
 - Autoatendimento para emissão de certidões, boletos e atualização cadastral.
 
+### RF008 - Módulo de Funcionários e Acesso
+
+- **Gestão Unificada**: Perfis de funcionários do conselho vinculados diretamente a contas de usuário (Shield).
+- **Dados Profissionais**: Registro de matrícula, lotação, cargo e dados jurídicos (OAB) quando aplicável.
+- **Hierarquia de Permissões**: Controle de acesso granular baseado em Grupos (Admin, Advogado, Fiscal, Secretaria) e permissões individuais.
+
 ## 5. Requisitos Não Funcionais (RNF)
 
 - **RNF001**: Compatibilidade com PHP 8.1+ e PostgreSQL (recomendado para autarquias) ou MySQL.

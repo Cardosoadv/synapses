@@ -12,7 +12,7 @@ O Synapses é um sistema de gestão abrangente construído sobre o CodeIgniter 4
 - **Cadastro de Empresas**: Gerenciamento de pessoas jurídicas (PJ) com detalhes corporativos.
 - **Gestão de Contratos**: Acompanhamento e gestão de contratos.
 - **Gestão de Processos**: Integração com números de processo SEI!.
-- **Controle de Acesso**: Acesso baseado em funções (RBAC) via CodeIgniter Shield.
+- **Módulo de Funcionários**: Gestão interna de colaboradores, integrando dados profissionais (Cargo, Departamento, OAB) com o sistema de autenticação (Shield).
 
 ## Requisitos do Sistema
 
@@ -54,4 +54,7 @@ O Synapses é um sistema de gestão abrangente construído sobre o CodeIgniter 4
 
 ## Atualizações Recentes
 
+- **Refatoração do Módulo de Acesso**: Unificação da gestão de Usuários e Funcionários.
+  - Criação do **Módulo de Funcionários**: Gerencia dados cadastrais e profissionais vinculados a uma conta de acesso (Shield).
+  - **Arquitetura Service-Repository**: Implementação robusta com transações para garantir integridade entre dados de login e dados de RH.
 - **Módulo de Cadastro**: Adicionado suporte no banco de dados para campos biométricos (Foto, Impressão Digital, Assinatura) na tabela `professionals`.

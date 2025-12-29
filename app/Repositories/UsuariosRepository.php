@@ -17,8 +17,9 @@ class UsuariosRepository
     public function getPaginatedUsers(int $perPage = 10, string $search = null)
     {
         // Use alias 'identities' to avoid potential collisions with Shield's internal joins
-        $this->model->select('users.*, identities.secret as email');
-        $this->model->join('auth_identities as identities', 'identities.user_id = users.id AND identities.type = "email_password"', 'left');
+        $this->model->select('users.*, identities.secret as email, employees.photo as photo, employees.id as employee_id');
+        $this->model->join('auth_identities as identities', 'identities.user_id = users.id AND identities.type = "email_password"', 'left')
+                    ->join('employees', 'employees.user_id = users.id', 'left');
         
         if ($search) {
             $this->model->groupStart()

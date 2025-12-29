@@ -101,7 +101,7 @@
 
         <div class="row g-3">
             <?php foreach ($funcionarios as $func): ?>
-                <div class="col-12 col-md-6 col-xl-4">
+                <div class="col-6">
                     <div class="card shadow-sm h-100 border-0">
                         <div class="card-body p-3">
                             <!-- Header com Foto e Informações Principais -->
@@ -134,11 +134,13 @@
                                             <?= esc($func['username']) ?>
                                         </a>
                                     </h6>
-                                    <div class="text-muted small text-truncate" title="<?= esc($func['email']) ?>">
-                                        <i class="bi bi-envelope me-1"></i><?= esc($func['email']) ?>
-                                    </div>
-                                    <div class="text-muted small text-truncate" title="Cargo">
-                                        <i class="bi bi-briefcase me-1"></i><?= esc($func['position']) ?>
+                                    <div class='row'>
+                                        <div class="text-muted small text-truncate" title="<?= esc($func['email']) ?>">
+                                            <i class="bi bi-envelope me-1"></i><?= esc($func['email']) ?>
+                                        </div>
+                                        <div class="text-muted small text-truncate" title="Cargo">
+                                            <i class="bi bi-briefcase me-1"></i><?= esc($func['position']) ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

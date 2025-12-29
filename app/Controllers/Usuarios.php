@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Services\UsuariosService;
+use App\Services\FuncionariosService;
 
 class Usuarios extends BaseController
 {
     protected $service;
+    protected $funcionariosService; 
 
     public function __construct()
     {
         $this->service = new UsuariosService();
+        $this->funcionariosService = new FuncionariosService();
     }
 
     public function index()
@@ -21,12 +24,6 @@ class Usuarios extends BaseController
         
         // Pass search term back to view
         $data['search'] = $search;
-        
-        // Active users count (approximate, for the stats widget)
-        // Ideally Service should provide this.
-        // Quick fix: count total active? Repository result has total, but active specific?
-        // Let's just use total for now or ignore 'activeUsers' if not available in data.
-        // The view checks if(isset($activeUsers)).
         
         return $this->loadView('usuarios/index', $data);
     }
@@ -82,15 +79,28 @@ class Usuarios extends BaseController
         return redirect()->to('/usuarios')->with('message', 'Usuário excluído com sucesso.');
     }
 
+    public function grupos()
+    {
+        $config = config('AuthGroups');
+
+        $data = [
+            'groups'      => $config->groups,
+            'permissions' => $config->permissions,
+            'matrix'      => $config->matrix,
+        ];
+
+        return $this->loadView('usuarios/grupos', $data);
+    }
+
     public function exibirFoto($id)
     {
-        $user = $this->service->getUserById($id);
-        if (!$user || empty($user['auth_image'])) {
+        $funcionario = $this->funcionariosService->getFuncionarioByUserId($id);
+        if (!$funcionario || empty($funcionario['photo'])) {
             // Return default placeholder or 404
             return $this->response->setStatusCode(404);
         }
 
-        $path = FCPATH . 'uploads/usuarios/' . $user['auth_image'];
+        $path =     WRITEPATH . 'uploads/funcionarios/'.$funcionario['id'].'/'.$funcionario['photo'];
         if (file_exists($path)) {
             $mime = mime_content_type($path);
             return $this->response->setHeader('Content-Type', $mime)
@@ -98,5 +108,37 @@ class Usuarios extends BaseController
         }
 
         return $this->response->setStatusCode(404);
+    }
+
+    public function promover($id)
+    {
+        $user = $this->service->getUserById($id);
+        if (!$user) {
+            return redirect()->to('/usuarios')->with('error', 'Usuário não encontrado.');
+        }
+
+        // Check if already employee
+        if ($this->funcionariosService->getFuncionarioByUserId($id)) {
+             return redirect()->to('/usuarios')->with('warning', 'Este usuário já é um funcionário.');
+        }
+
+        return $this->loadView('usuarios/promover', ['user' => $user]);
+    }
+
+    public function salvarPromocao($id)
+    {
+        $user = $this->service->getUserById($id);
+        if (!$user) {
+            return redirect()->to('/usuarios')->with('error', 'Usuário não encontrado.');
+        }
+
+        $data = $this->request->getPost();
+
+        try {
+            $this->funcionariosService->createFromUser($id, $data);
+            return redirect()->to('/usuarios')->with('message', 'Usuário promovido a funcionário com sucesso.');
+        } catch (\Exception $e) {
+             return redirect()->back()->withInput()->with('error', 'Erro ao promover usuário: ' . $e->getMessage());
+        }
     }
 }

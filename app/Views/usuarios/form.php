@@ -76,45 +76,6 @@
                 </div>
             </div>
 
-            <!-- Custom Fields / Professional Info -->
-            <h6 class="border-bottom pb-2 mb-3 mt-4">Dados Profissionais</h6>
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" name="is_lawyer" value="1" id="isLawyerCheck"
-                            <?= old('is_lawyer', $user['is_lawyer'] ?? 0) ? 'checked' : '' ?>
-                            onchange="toggleAdvogadoFields()">
-                        <label class="form-check-label" for="isLawyerCheck">É Advogado?</label>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" name="rateio_ativo" value="1" id="rateioCheck"
-                            <?= old('rateio_ativo', $user['rateio_ativo'] ?? 0) ? 'checked' : '' ?>>
-                        <label class="form-check-label" for="rateioCheck">Participa de Rateio?</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3" id="advogadoFields" style="display: none;">
-                <div class="col-md-6">
-                    <label class="form-label">Número OAB</label>
-                    <input type="text" name="oab_numero" class="form-control"
-                        value="<?= old('oab_numero', $user['oab_numero'] ?? '') ?>">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">UF OAB</label>
-                    <select name="oab_uf" class="form-select">
-                        <option value="">Selecione...</option>
-                        <?php
-                        $ufs = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-                        foreach ($ufs as $uf): ?>
-                            <option value="<?= $uf ?>" <?= (old('oab_uf', $user['oab_uf'] ?? '') == $uf) ? 'selected' : '' ?>><?= $uf ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
             <!-- Groups & Permissions -->
             <?php
             $config = config('AuthGroups');

@@ -101,13 +101,13 @@
 
         <div class="row g-3">
             <?php foreach ($users as $user): ?>
-                <div class="col-12 col-md-6 col-xl-4">
+                <div class="col-6">
                     <div class="card shadow-sm h-100 border-0">
                         <div class="card-body p-3">
                             <!-- Header com Foto e Informações Principais -->
                             <div class="d-flex align-items-start mb-3">
                                 <div class="flex-shrink-0 position-relative">
-                                    <?php if (!empty($user['auth_image'])): ?>
+                                    <?php if (!empty($user['photo'])): ?>
                                         <img src="<?= base_url('usuarios/exibirFoto/' . $user['id']) ?>"
                                             alt="Foto de <?= esc($user['username']) ?>"
                                             class="rounded-circle border border-2"
@@ -171,6 +171,14 @@
 
                             <!-- Ações -->
                             <div class="d-flex gap-2 mt-3 pt-2 border-top position-relative">
+                                <?php if (empty($user['employee_id'])): ?>
+                                    <a href="<?= base_url('usuarios/promover/' . $user['id']) ?>"
+                                        class="btn btn-sm btn-outline-success position-relative"
+                                        style="z-index: 10;"
+                                        title="Promover a Funcionário">
+                                        <i class="bi bi-person-up"></i>
+                                    </a>
+                                <?php endif; ?>
                                 <a href="<?= base_url('usuarios/editar/' . $user['id']) ?>"
                                     class="btn btn-sm btn-outline-primary flex-fill position-relative"
                                     style="z-index: 10;">

@@ -11,9 +11,6 @@ class Funcionarios extends BaseController
 
     public function __construct()
     {
-        // Must call parent constructor if BaseController does something
-        // In this case, BaseController doesn't have a constructor, but it has initController.
-        // Constructors in Controllers are fine.
         $this->service = new FuncionariosService();
     }
 
@@ -50,6 +47,36 @@ class Funcionarios extends BaseController
         }
     }
 
+    protected function validateForm($data)
+    {
+        $rules = [
+            'email' => 'required|valid_email',
+            'cpf' => 'required|valid_cpf',
+        ];
+
+        $errors = [
+            
+            'email' => [
+                'required' => 'O campo email é obrigatório.',
+                'valid_email' => 'O campo email deve ser um email válido.',
+            ],
+            'cpf' => [
+                'required' => 'O campo CPF é obrigatório.',
+                'valid_cpf' => 'O campo CPF deve ser um CPF válido.',
+            ],
+        ];
+
+        $validation = \Config\Services::validation();
+        $validation->setRules($rules, $errors);
+
+        if (!$validation->run($data)) {
+            log_message('error', 'Erro na validação de dados do funcionário: ' . json_encode($validation->getErrors()));
+            return $validation->getErrors();
+        }
+
+        return true;
+    }
+
     public function editar($id)
     {
         $funcionario = $this->service->getById($id);
@@ -70,6 +97,11 @@ class Funcionarios extends BaseController
     {
         $data = $this->request->getPost();
         $file = $this->request->getFile('foto-perfil');
+        $errors = $this->validateForm($data);
+
+        if ($errors) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
 
         try {
             $this->service->update($id, $data, $file);
@@ -95,7 +127,7 @@ class Funcionarios extends BaseController
             return $this->response->setStatusCode(404);
         }
 
-        $path = FCPATH . 'uploads/funcionarios/' . $funcionario['photo'];
+        $path = WRITEPATH . 'uploads/funcionarios/'.$id.'/'.$funcionario['photo'];
         
         if (file_exists($path)) {
             $mime = mime_content_type($path);

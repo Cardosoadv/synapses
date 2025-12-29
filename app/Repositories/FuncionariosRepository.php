@@ -61,12 +61,138 @@ class FuncionariosRepository
         return $funcionario;
     }
 
+    public function getFuncionarioByUserId(int $userId)
+    {
+        return $this->model->where('user_id', $userId)->first();
+    }
+
+    public function create(array $userInfo, array $employeeInfo): bool
+    {
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        try {
+            // 1. Create Shield User
+            $user = new \CodeIgniter\Shield\Entities\User([
+                'username' => $userInfo['username'],
+                'email'    => $userInfo['email'],
+                'password' => $userInfo['password'],
+                'active'   => $userInfo['active'] ?? 0,
+            ]);
+            $this->userModel->save($user);
+            
+            // Get inserted User ID
+            $user = $this->userModel->findById($this->userModel->getInsertID());
+            
+            // Sync Groups/Permissions
+            if (!empty($userInfo['groups'])) {
+                $user->syncGroups(...$userInfo['groups']);
+            }
+            if (!empty($userInfo['permissions'])) {
+                foreach ($userInfo['permissions'] as $perm) {
+                    $user->addPermission($perm);
+                }
+            }
+
+            // 2. Create Employee Record linked to User
+            $employeeInfo['user_id'] = $user->id;
+            $this->model->insert($employeeInfo);
+
+            $db->transComplete();
+
+            return $db->transStatus();
+
+        } catch (\Exception $e) {
+            $db->transRollback();
+            throw $e;
+        }
+    }
+
+    public function createEmployee(array $employeeInfo): bool
+    {
+        return $this->model->insert($employeeInfo) !== false;
+    }
+
+    public function update(int $id, array $userInfo, array $employeeInfo): bool
+    {
+        $funcionario = $this->model->find($id);
+        if (!$funcionario) {
+            return false;
+        }
+
+        $user = $this->userModel->findById($funcionario['user_id']);
+        if (!$user) {
+             return false;
+        }
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        try {
+            // 1. Update Shield User
+            $user->username = $userInfo['username'];
+            if (!empty($userInfo['password'])) {
+                $user->password = $userInfo['password'];
+            }
+            $user->active = $userInfo['active'] ?? 0;
+            $this->userModel->save($user);
+
+            // Update Email Identity if changed
+            if ($user->email !== $userInfo['email']) {
+                 $identityModel = new \CodeIgniter\Shield\Models\UserIdentityModel();
+                 $identity = $identityModel->getIdentityByType($user, 'email_password');
+                 if ($identity) {
+                     $identity->secret = $userInfo['email'];
+                     $identityModel->save($identity);
+                 }
+            }
+
+            // Groups & Permissions
+            if (isset($userInfo['groups'])) {
+                $user->syncGroups(...$userInfo['groups']);
+            } else {
+                $user->syncGroups();
+            }
+            if (isset($userInfo['permissions'])) {
+                 $user->syncPermissions(...$userInfo['permissions']);
+            } else {
+                 $user->syncPermissions();
+            }
+
+            // 2. Update Employee Record
+            $this->model->update($id, $employeeInfo);
+
+            $db->transComplete();
+            return $db->transStatus();
+
+        } catch (\Exception $e) {
+            $db->transRollback();
+            throw $e;
+        }
+    }
+
     public function delete(int $id)
     {
-        // Soft delete employee
-        return $this->model->delete($id);
-        // Should we delete User? Usually keeping user but deactivating might be safer, 
-        // but if Employee is deleted, User likely should be too or at least deactivated.
-        // Logic handled in Service.
+        $funcionario = $this->model->find($id);
+        if (!$funcionario) {
+            return false;
+        }
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+        
+        try {
+            // Soft delete employee
+            $this->model->delete($id);
+            
+            // Delete User (Shield)
+            $this->userModel->delete($funcionario['user_id']);
+    
+            $db->transComplete();
+            return $db->transStatus();
+        } catch (\Exception $e) {
+            $db->transRollback();
+            return false;
+        }
     }
 }
