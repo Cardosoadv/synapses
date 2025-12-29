@@ -40,3 +40,46 @@ $routes->group('funcionarios', ['filter' => 'group:superadmin,admin'], function 
     $routes->get('excluir/(:num)', 'Funcionarios::excluir/$1', ['filter' => 'permission:users.delete']);
     $routes->get('exibirFoto/(:num)', 'Funcionarios::exibirFoto/$1');
 });
+
+/**
+ * Rotas de profissionais
+ */
+$routes->group('profissionais', ['filter' => 'group:superadmin,admin'], function ($routes) {
+    $routes->get('/', 'Profissionais::index');
+    $routes->get('new', 'Profissionais::novo', ['filter' => 'permission:users.create']); // Using 'new' to match standard resource but mapped to 'novo'
+    $routes->post('create', 'Profissionais::salvar', ['filter' => 'permission:users.create']);
+    $routes->get('edit/(:num)', 'Profissionais::editar/$1', ['filter' => 'permission:users.edit']);
+    $routes->post('update/(:num)', 'Profissionais::atualizar/$1', ['filter' => 'permission:users.edit']);
+    $routes->get('delete/(:num)', 'Profissionais::excluir/$1', ['filter' => 'permission:users.delete']);
+    $routes->get('history/(:num)', 'Profissionais::history/$1');
+});
+
+/**
+ * Rotas Auxiliares
+ */
+$routes->group('profissoes', ['filter' => 'group:superadmin,admin'], function ($routes) {
+    $routes->get('/', 'Profissoes::index');
+    $routes->get('novo', 'Profissoes::novo');
+    $routes->post('salvar', 'Profissoes::salvar');
+    $routes->get('editar/(:num)', 'Profissoes::editar/$1');
+    $routes->post('atualizar/(:num)', 'Profissoes::atualizar/$1');
+    $routes->get('excluir/(:num)', 'Profissoes::excluir/$1');
+});
+
+$routes->group('categorias_profissionais', ['filter' => 'group:superadmin,admin'], function ($routes) {
+    $routes->get('/', 'CategoriasProfissionais::index');
+    $routes->get('novo', 'CategoriasProfissionais::novo');
+    $routes->post('salvar', 'CategoriasProfissionais::salvar');
+    $routes->get('editar/(:num)', 'CategoriasProfissionais::editar/$1');
+    $routes->post('atualizar/(:num)', 'CategoriasProfissionais::atualizar/$1');
+    $routes->get('excluir/(:num)', 'CategoriasProfissionais::excluir/$1');
+});
+
+$routes->group('atribuicoes', ['filter' => 'group:superadmin,admin'], function ($routes) {
+    $routes->get('/', 'Atribuicoes::index');
+    $routes->get('novo', 'Atribuicoes::novo');
+    $routes->post('salvar', 'Atribuicoes::salvar');
+    $routes->get('editar/(:num)', 'Atribuicoes::editar/$1');
+    $routes->post('atualizar/(:num)', 'Atribuicoes::atualizar/$1');
+    $routes->get('excluir/(:num)', 'Atribuicoes::excluir/$1');
+});
