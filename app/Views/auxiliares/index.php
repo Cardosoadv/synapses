@@ -3,7 +3,7 @@
 <?= $this->section('conteudo') ?>
 <div class="card shadow-sm border-0 mt-3">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="bi bi-list-task me-2"></i><?= esc($title) ?></h5>
+        <h5 class="mb-0"><i class="bi bi-list-task me-2"></i><?= esc($titulo) ?></h5>
         <a href="<?= base_url($controller . '/novo') ?>" class="btn btn-light btn-sm text-primary fw-bold">
             <i class="bi bi-plus-circle"></i> Novo
         </a>

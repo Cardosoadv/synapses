@@ -11,6 +11,16 @@ use App\Models\CategoriasProfissionaisModel;
 use App\Models\AtribuicoesModel;
 use CodeIgniter\Database\BaseBuilder;
 
+/**
+ * Classe de repositório para profissionais
+ * 
+ * @author Cardoso <fabianocardoso.adv@gmail.com>
+ * @version 0.0.1
+ * 
+ * @property ProfissionaisModel $profissionaisModel
+ * @property EnderecosProfissionaisModel $enderecosModel
+ * @property \CodeIgniter\Database\BaseConnection $db
+ */
 class ProfissionaisRepository extends BaseRepository
 {
     protected ProfissionaisModel $profissionaisModel;
@@ -20,6 +30,9 @@ class ProfissionaisRepository extends BaseRepository
     public function __construct()
     {
         $this->profissionaisModel = new ProfissionaisModel();
+        // Initialize BaseRepository $model
+        $this->model = $this->profissionaisModel;
+        
         $this->enderecosModel = new EnderecosProfissionaisModel();
         $this->db = \Config\Database::connect();
     }
@@ -103,6 +116,15 @@ class ProfissionaisRepository extends BaseRepository
         }
     }
 
+    /**
+     * Sincroniza as relações de um profissional
+     * 
+     * @param int $professionalId
+     * @param string $pivotTable
+     * @param string $fkColumn
+     * @param array $ids
+     * @return void
+     */
     public function syncRelations(int $professionalId, string $pivotTable, string $fkColumn, array $ids): void
     {
         $builder = $this->db->table($pivotTable);

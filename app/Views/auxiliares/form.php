@@ -3,7 +3,7 @@
 <?= $this->section('conteudo') ?>
 <div class="card shadow-sm border-0 mt-3">
     <div class="card-header bg-primary text-white">
-        <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i><?= esc($title) ?></h5>
+        <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i><?= esc($titulo) ?></h5>
     </div>
     <div class="card-body">
         

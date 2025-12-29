@@ -67,7 +67,11 @@ class Profissionais extends BaseController
         ];
 
         try {
-            $this->service->create($professionalData, $addressData, $relations);
+            // Unify data for service (to match BaseService signature)
+            $professionalData['address_data'] = $addressData;
+            $professionalData['relations'] = $relations;
+
+            $this->service->create($professionalData);
             return redirect()->to('/profissionais')->with('message', 'Profissional cadastrado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Erro ao salvar: ' . $e->getMessage());
@@ -127,7 +131,11 @@ class Profissionais extends BaseController
         ];
 
         try {
-            $this->service->update($id, $professionalData, $addressData, $relations);
+            // Unify data for service
+            $professionalData['address_data'] = $addressData;
+            $professionalData['relations'] = $relations;
+
+            $this->service->update($id, $professionalData);
             return redirect()->to('/profissionais')->with('message', 'Profissional atualizado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Erro ao atualizar: ' . $e->getMessage());

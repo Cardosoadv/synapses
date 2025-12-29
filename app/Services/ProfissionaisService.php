@@ -8,9 +8,16 @@ use App\Repositories\ProfissionaisRepository;
 use CodeIgniter\Database\BaseConnection;
 use Exception;
 
+/**
+ * Classe de serviço para profissionais
+ * 
+ * @author Cardoso <fabianocardoso.adv@gmail.com>
+ * @version 0.0.1
+ * 
+ */
 class ProfissionaisService extends BaseService
 {
-    protected ProfissionaisRepository $repository;
+
     protected BaseConnection $db;
 
     public function __construct()
@@ -19,19 +26,26 @@ class ProfissionaisService extends BaseService
         $this->db = \Config\Database::connect();
     }
 
+
     /**
      * Cria um profissional
-     * Sobreescreve o metodo create da classe BaseService
+     * Sobreescreve o metodo create da classe BaseService e extrai dados complexos
      * 
-     * @param array $data Main professional data
-     * @param array $addressData Address data
-     * @param array $relations Arrays of IDs for 'profissoes', 'categorias', 'atribuicoes'
+     * @param array $data Combined data: professional fields + 'address_data' + 'relations'
      */
-    public function create(array $data, array $addressData, array $relations): int
+    public function create(array $data): int
     {
         $this->db->transStart();
 
         try {
+            // Extract auxiliary data
+            $addressData = $data['address_data'] ?? [];
+            $relations = $data['relations'] ?? [];
+            
+            // Remove aux data from main array so it doesn't break model insert
+            unset($data['address_data']);
+            unset($data['relations']);
+
             // 1. Create Professional
             $id = $this->repository->create($data);
             if (!$id) {
@@ -61,18 +75,24 @@ class ProfissionaisService extends BaseService
 
     /**
      * Atualiza um profissional
-     * Sobreescreve o metodo update da classe BaseService
+     * Sobreescreve o metodo update da classe BaseService e extrai dados complexos
      * 
      * @param int $id
-     * @param array $data Main professional data
-     * @param array $addressData Address data
-     * @param array $relations Arrays of IDs for 'profissoes', 'categorias', 'atribuicoes'
+     * @param array $data Combined data: professional fields + 'address_data' + 'relations'
      */
-    public function update(int $id, array $data, array $addressData, array $relations): bool
+    public function update(int $id, array $data): bool
     {
         $this->db->transStart();
 
         try {
+            // Extract auxiliary data
+            $addressData = $data['address_data'] ?? [];
+            $relations = $data['relations'] ?? [];
+
+            // Remove aux data
+            unset($data['address_data']);
+            unset($data['relations']);
+
             // 1. Update Professional
             $this->repository->update($id, $data);
 
@@ -97,6 +117,13 @@ class ProfissionaisService extends BaseService
         }
     }
     
+    /**
+     * Sincroniza as relações de um profissional
+     * 
+     * @param int $id
+     * @param array $relations
+     * @return void
+     */
     private function syncAllRelations(int $id, array $relations) {
         if (isset($relations['profissoes'])) {
             $this->repository->syncRelations($id, 'profissional_profissoes', 'profissao_id', $relations['profissoes']);
