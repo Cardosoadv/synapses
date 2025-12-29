@@ -5,6 +5,13 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Services\CategoriasProfissionaisService;
 
+/**
+ * Controller para gerenciar categorias de profissões
+ * 
+ * @package App\Controllers
+ * @author  Cardoso <fabianocardoso.adv@gmail.com>
+ * @version 0.0.1
+ */
 class CategoriasProfissionais extends BaseController
 {
     protected CategoriasProfissionaisService $service;
@@ -14,22 +21,37 @@ class CategoriasProfissionais extends BaseController
         $this->service = new CategoriasProfissionaisService();
     }
 
+    /**
+     * Lista todas as categorias de profissões
+     * 
+     * @return view
+     */
     public function index()
     {
         $data['itens'] = $this->service->listAll();
-        $data['title'] = 'Gerenciar Categorias';
+        $data['titulo'] = 'Gerenciar Categorias';
         $data['controller'] = 'categorias_profissionais';
         return $this->loadView('auxiliares/index', $data);
     }
 
+    /**
+     * Formulário para criar uma nova categoria de profissão
+     * 
+     * @return view
+     */
     public function novo()
     {
-        $data['title'] = 'Nova Categoria';
+        $data['titulo'] = 'Nova Categoria';
         $data['action'] = base_url('categorias_profissionais/salvar');
         $data['controller'] = 'categorias_profissionais';
         return $this->loadView('auxiliares/form', $data);
     }
 
+    /**
+     * Salva uma nova categoria de profissão
+     * 
+     * @return redirect
+     */
     public function salvar()
     {
         if (!$this->validate(['nome' => 'required|min_length[3]|is_unique[categorias_profissionais.nome]'])) {
@@ -44,17 +66,29 @@ class CategoriasProfissionais extends BaseController
         }
     }
 
+    /**
+     * Formulário para editar uma categoria de profissão
+     * 
+     * @param int $id
+     * @return view
+     */
     public function editar($id)
     {
         $data['item'] = $this->service->getById($id);
         if (!$data['item']) return redirect()->to('/categorias_profissionais');
 
-        $data['title'] = 'Editar Categoria';
+        $data['titulo'] = 'Editar Categoria';
         $data['action'] = base_url('categorias_profissionais/atualizar/' . $id);
         $data['controller'] = 'categorias_profissionais';
         return $this->loadView('auxiliares/form', $data);
     }
 
+    /**
+     * Atualiza uma categoria de profissão
+     * 
+     * @param int $id
+     * @return redirect
+     */
     public function atualizar($id)
     {
         if (!$this->validate(['nome' => "required|min_length[3]|is_unique[categorias_profissionais.nome,id,$id]"])) {
@@ -69,6 +103,12 @@ class CategoriasProfissionais extends BaseController
         }
     }
 
+    /**
+     * Exclui uma categoria
+     * 
+     * @param int $id
+     * @return redirect
+     */
     public function excluir($id)
     {
         try {

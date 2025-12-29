@@ -11,7 +11,7 @@ use App\Models\CategoriasProfissionaisModel;
 use App\Models\AtribuicoesModel;
 use CodeIgniter\Database\BaseBuilder;
 
-class ProfissionaisRepository
+class ProfissionaisRepository extends BaseRepository
 {
     protected ProfissionaisModel $profissionaisModel;
     protected EnderecosProfissionaisModel $enderecosModel;
@@ -24,11 +24,14 @@ class ProfissionaisRepository
         $this->db = \Config\Database::connect();
     }
 
-    public function findAll(int $limit = 0, int $offset = 0): array
-    {
-        return $this->profissionaisModel->findAll($limit, $offset);
-    }
 
+    /**
+     * Busca um profissional pelo ID
+     * Sobreescreve o metodo findById da classe BaseRepository
+     * 
+     * @param int $id
+     * @return ?array
+     */
     public function findById(int $id): ?array
     {
         $professional = $this->profissionaisModel->find($id);
@@ -47,6 +50,14 @@ class ProfissionaisRepository
         return $professional;
     }
 
+    /**
+     * Busca os IDs das relações de um profissional
+     * 
+     * @param int $professionalId
+     * @param string $table
+     * @param string $fkColumn
+     * @return array
+     */
     protected function getRelatedIds(int $professionalId, string $table, string $fkColumn): array
     {
         return $this->db->table($table)
@@ -56,6 +67,16 @@ class ProfissionaisRepository
             ->getResultArray();
     }
     
+    /**
+     * Busca os nomes das relações de um profissional
+     * 
+     * @param int $professionalId
+     * @param string $pivotTable
+     * @param string $relatedTable
+     * @param string $fkPivot
+     * @param string $nameCol
+     * @return array
+     */
     public function getRelatedNames(int $professionalId, string $pivotTable, string $relatedTable, string $fkPivot, string $nameCol = 'nome'): array
     {
          return $this->db->table($pivotTable)
@@ -66,20 +87,7 @@ class ProfissionaisRepository
             ->getResultArray();
     }
 
-    public function create(array $data): int
-    {
-        return (int) $this->profissionaisModel->insert($data);
-    }
 
-    public function update(int $id, array $data): bool
-    {
-        return $this->profissionaisModel->update($id, $data);
-    }
-
-    public function delete(int $id): bool
-    {
-        return $this->profissionaisModel->delete($id);
-    }
 
     // --- Auxiliary Tables Management ---
 

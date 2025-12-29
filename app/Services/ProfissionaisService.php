@@ -8,7 +8,7 @@ use App\Repositories\ProfissionaisRepository;
 use CodeIgniter\Database\BaseConnection;
 use Exception;
 
-class ProfissionaisService
+class ProfissionaisService extends BaseService
 {
     protected ProfissionaisRepository $repository;
     protected BaseConnection $db;
@@ -19,17 +19,10 @@ class ProfissionaisService
         $this->db = \Config\Database::connect();
     }
 
-    public function listAll(): array
-    {
-        return $this->repository->findAll();
-    }
-
-    public function getById(int $id): ?array
-    {
-        return $this->repository->findById($id);
-    }
-
     /**
+     * Cria um profissional
+     * Sobreescreve o metodo create da classe BaseService
+     * 
      * @param array $data Main professional data
      * @param array $addressData Address data
      * @param array $relations Arrays of IDs for 'profissoes', 'categorias', 'atribuicoes'
@@ -66,6 +59,15 @@ class ProfissionaisService
         }
     }
 
+    /**
+     * Atualiza um profissional
+     * Sobreescreve o metodo update da classe BaseService
+     * 
+     * @param int $id
+     * @param array $data Main professional data
+     * @param array $addressData Address data
+     * @param array $relations Arrays of IDs for 'profissoes', 'categorias', 'atribuicoes'
+     */
     public function update(int $id, array $data, array $addressData, array $relations): bool
     {
         $this->db->transStart();
@@ -93,11 +95,6 @@ class ProfissionaisService
             $this->db->transRollback();
             throw $e;
         }
-    }
-
-    public function delete(int $id): bool
-    {
-        return $this->repository->delete($id);
     }
     
     private function syncAllRelations(int $id, array $relations) {
