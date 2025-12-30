@@ -32,7 +32,7 @@ class ProfissionaisRepository extends BaseRepository
         $this->profissionaisModel = new ProfissionaisModel();
         // Initialize BaseRepository $model
         $this->model = $this->profissionaisModel;
-        
+
         $this->enderecosModel = new EnderecosProfissionaisModel();
         $this->db = \Config\Database::connect();
     }
@@ -79,7 +79,7 @@ class ProfissionaisRepository extends BaseRepository
             ->get()
             ->getResultArray();
     }
-    
+
     /**
      * Busca os nomes das relações de um profissional
      * 
@@ -92,7 +92,7 @@ class ProfissionaisRepository extends BaseRepository
      */
     public function getRelatedNames(int $professionalId, string $pivotTable, string $relatedTable, string $fkPivot, string $nameCol = 'nome'): array
     {
-         return $this->db->table($pivotTable)
+        return $this->db->table($pivotTable)
             ->select("$relatedTable.$nameCol")
             ->join($relatedTable, "$relatedTable.id = $pivotTable.$fkPivot")
             ->where("$pivotTable.profissional_id", $professionalId)
@@ -128,7 +128,7 @@ class ProfissionaisRepository extends BaseRepository
     public function syncRelations(int $professionalId, string $pivotTable, string $fkColumn, array $ids): void
     {
         $builder = $this->db->table($pivotTable);
-        
+
         // Remove existing
         $builder->where('profissional_id', $professionalId)->delete();
 
@@ -137,8 +137,8 @@ class ProfissionaisRepository extends BaseRepository
             $batch = [];
             foreach ($ids as $id) {
                 // Ignore invalid/empty IDs
-                if(empty($id)) continue;
-                
+                if (empty($id)) continue;
+
                 $batch[] = [
                     'profissional_id' => $professionalId,
                     $fkColumn         => $id,
@@ -149,17 +149,25 @@ class ProfissionaisRepository extends BaseRepository
             }
         }
     }
-    
+
     // --- Dropdown Helpers ---
-    public function getAllProfissoes(): array {
+    public function getAllProfissoes(): array
+    {
         return (new ProfissoesModel())->findAll();
     }
 
-    public function getAllCategorias(): array {
+    public function getAllCategorias(): array
+    {
         return (new CategoriasProfissionaisModel())->findAll();
     }
 
-    public function getAllAtribuicoes(): array {
+    public function getAllAtribuicoes(): array
+    {
         return (new AtribuicoesModel())->findAll();
+    }
+
+    public function findAll(int $limit = 0, int $offset = 0): array
+    {
+        return $this->profissionaisModel->findAll($limit, $offset);
     }
 }

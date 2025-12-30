@@ -84,3 +84,17 @@ $routes->group('atribuicoes', ['filter' => 'group:superadmin,admin'], function (
     $routes->post('atualizar/(:num)', 'Atribuicoes::atualizar/$1');
     $routes->get('excluir/(:num)', 'Atribuicoes::excluir/$1');
 });
+
+/**
+ * Rotas de Empresas
+ */
+$routes->group('empresas', ['filter' => 'group:superadmin,admin'], function ($routes) {
+    $routes->get('/', 'Empresas::index');
+    $routes->get('novo', 'Empresas::novo');
+    $routes->post('salvar', 'Empresas::salvar');
+    $routes->get('editar/(:num)', 'Empresas::editar/$1');
+    $routes->post('atualizar/(:num)', 'Empresas::atualizar/$1');
+    $routes->get('excluir/(:num)', 'Empresas::excluir/$1');
+    $routes->get('vincular', 'Empresas::vincular');
+    $routes->post('salvarVinculo', 'Empresas::salvarVinculo');
+});

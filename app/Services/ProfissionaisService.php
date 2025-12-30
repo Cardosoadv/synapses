@@ -41,7 +41,7 @@ class ProfissionaisService extends BaseService
             // Extract auxiliary data
             $addressData = $data['address_data'] ?? [];
             $relations = $data['relations'] ?? [];
-            
+
             // Remove aux data from main array so it doesn't break model insert
             unset($data['address_data']);
             unset($data['relations']);
@@ -61,9 +61,9 @@ class ProfissionaisService extends BaseService
             $this->syncAllRelations($id, $relations);
 
             $this->db->transComplete();
-            
+
             if ($this->db->transStatus() === false) {
-                 throw new Exception("Erro na transação de banco de dados.");
+                throw new Exception("Erro na transação de banco de dados.");
             }
 
             return $id;
@@ -107,7 +107,7 @@ class ProfissionaisService extends BaseService
             $this->db->transComplete();
 
             if ($this->db->transStatus() === false) {
-                 return false;
+                return false;
             }
 
             return true;
@@ -116,7 +116,7 @@ class ProfissionaisService extends BaseService
             throw $e;
         }
     }
-    
+
     /**
      * Sincroniza as relações de um profissional
      * 
@@ -124,7 +124,8 @@ class ProfissionaisService extends BaseService
      * @param array $relations
      * @return void
      */
-    private function syncAllRelations(int $id, array $relations) {
+    private function syncAllRelations(int $id, array $relations)
+    {
         if (isset($relations['profissoes'])) {
             $this->repository->syncRelations($id, 'profissional_profissoes', 'profissao_id', $relations['profissoes']);
         }
@@ -135,13 +136,23 @@ class ProfissionaisService extends BaseService
             $this->repository->syncRelations($id, 'profissional_atribuicoes', 'atribuicao_id', $relations['atribuicoes']);
         }
     }
-    
+
     // Aux helpers for view
-    public function getFormOptions(): array {
+    public function getFormOptions(): array
+    {
         return [
             'profissoes' => $this->repository->getAllProfissoes(),
             'categorias' => $this->repository->getAllCategorias(),
             'atribuicoes' => $this->repository->getAllAtribuicoes(),
         ];
+    }
+
+    /**
+     * Retorna todos os profissionais
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->repository->findAll();
     }
 }

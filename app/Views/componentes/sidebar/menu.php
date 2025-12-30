@@ -48,49 +48,56 @@ if ($uri->getTotalSegments() >= 3) {
      * Checa permissão para administradores
      */
     if (auth()->user()->can('users.manage-admins')): ?>
-    <li class="nav-item">
-        <a href="<?= site_url('funcionarios'); ?>" class="nav-link <?= ($active === 'funcionarios') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
-            <i class="nav-icon bi bi-people-fill"></i>
-            <p>Funcionários</p>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a href="<?= site_url('funcionarios'); ?>" class="nav-link <?= ($active === 'funcionarios') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
+                <i class="nav-icon bi bi-people-fill"></i>
+                <p>Funcionários</p>
+            </a>
+        </li>
 
-    <li class="nav-item">
-        <a href="<?= site_url('profissionais'); ?>" class="nav-link <?= ($active === 'profissionais') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
-            <i class="nav-icon bi bi-briefcase-fill"></i>
-            <p>Profissionais</p>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a href="<?= site_url('profissionais'); ?>" class="nav-link <?= ($active === 'profissionais') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
+                <i class="nav-icon bi bi-briefcase-fill"></i>
+                <p>Profissionais</p>
+            </a>
+        </li>
 
-    <li class="nav-item <?= in_array($active, ['profissoes', 'categorias_profissionais', 'atribuicoes']) ? 'menu-open' : '' ?>">
-        <a href="#" class="nav-link <?= in_array($active, ['profissoes', 'categorias_profissionais', 'atribuicoes']) ? 'active bg-primary text-white' : '' ?>">
-            <i class="nav-icon bi bi-table"></i>
-            <p>
-                Tabelas Auxiliares
-                <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
-        </a>
-        <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="<?= site_url('profissoes'); ?>" class="nav-link <?= ($active === 'profissoes') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Profissões</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="<?= site_url('categorias_profissionais'); ?>" class="nav-link <?= ($active === 'categorias_profissionais') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Categorias</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="<?= site_url('atribuicoes'); ?>" class="nav-link <?= ($active === 'atribuicoes') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Atribuições</p>
-                </a>
-            </li>
-        </ul>
-    </li>
+        <li class="nav-item">
+            <a href="<?= site_url('empresas'); ?>" class="nav-link <?= ($active === 'empresas') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
+                <i class="nav-icon bi bi-building"></i>
+                <p>Empresas</p>
+            </a>
+        </li>
+
+        <li class="nav-item <?= in_array($active, ['profissoes', 'categorias_profissionais', 'atribuicoes']) ? 'menu-open' : '' ?>">
+            <a href="#" class="nav-link <?= in_array($active, ['profissoes', 'categorias_profissionais', 'atribuicoes']) ? 'active bg-primary text-white' : '' ?>">
+                <i class="nav-icon bi bi-table"></i>
+                <p>
+                    Tabelas Auxiliares
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="<?= site_url('profissoes'); ?>" class="nav-link <?= ($active === 'profissoes') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Profissões</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('categorias_profissionais'); ?>" class="nav-link <?= ($active === 'categorias_profissionais') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Categorias</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('atribuicoes'); ?>" class="nav-link <?= ($active === 'atribuicoes') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Atribuições</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
     <?php endif; ?>
 
