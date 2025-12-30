@@ -52,6 +52,7 @@ $routes->group('profissionais', ['filter' => 'group:superadmin,admin'], function
     $routes->post('update/(:num)', 'Profissionais::atualizar/$1', ['filter' => 'permission:users.edit']);
     $routes->get('delete/(:num)', 'Profissionais::excluir/$1', ['filter' => 'permission:users.delete']);
     $routes->get('history/(:num)', 'Profissionais::history/$1');
+    $routes->get('arquivo/(:num)/(:segment)', 'Profissionais::showFile/$1/$2');
 });
 
 /**

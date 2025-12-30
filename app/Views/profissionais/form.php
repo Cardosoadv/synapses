@@ -9,13 +9,13 @@
         </h5>
     </div>
     <div class="card-body">
-        
+
         <?php if (session()->getFlashdata('errors')): ?>
             <div class="alert alert-danger">
                 <ul>
-                <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                    <li><?= esc($error) ?></li>
-                <?php endforeach ?>
+                    <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                        <li><?= esc($error) ?></li>
+                    <?php endforeach ?>
                 </ul>
             </div>
         <?php endif; ?>
@@ -32,6 +32,9 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="atribuicoes-tab" data-bs-toggle="tab" data-bs-target="#atribuicoes" type="button" role="tab">Atribuições</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="biometria-tab" data-bs-toggle="tab" data-bs-target="#biometria" type="button" role="tab">Biometria</button>
                 </li>
             </ul>
 
@@ -65,8 +68,8 @@
                                 <option value="pending" <?= (old('status', $profissional['status'] ?? '') == 'pending') ? 'selected' : '' ?>>Pendente</option>
                             </select>
                         </div>
-                         <!-- Optional User Link -->
-                         <div class="col-md-4">
+                        <!-- Optional User Link -->
+                        <div class="col-md-4">
                             <label for="user_id" class="form-label">ID Usuário Vinculado (Opcional)</label>
                             <input type="number" class="form-control" id="user_id" name="user_id" value="<?= old('user_id', $profissional['user_id'] ?? '') ?>">
                             <small class="text-muted">Integração com tabela users.</small>
@@ -114,7 +117,7 @@
                         <div class="col-md-4">
                             <label class="form-label fw-bold">Profissões</label>
                             <div class="card card-body" style="max-height: 200px; overflow-y: auto;">
-                                <?php 
+                                <?php
                                 $selectedProfissoes = [];
                                 if (isset($profissional['profissoes'])) {
                                     $selectedProfissoes = array_column($profissional['profissoes'], 'profissao_id');
@@ -124,7 +127,7 @@
                                 ?>
                                 <?php foreach ($profissoes as $p): ?>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="profissoes[]" value="<?= $p['id'] ?>" id="prof_<?= $p['id'] ?>" 
+                                        <input class="form-check-input" type="checkbox" name="profissoes[]" value="<?= $p['id'] ?>" id="prof_<?= $p['id'] ?>"
                                             <?= in_array($p['id'], $selectedProfissoes) ? 'checked' : '' ?>>
                                         <label class="form-check-label" for="prof_<?= $p['id'] ?>">
                                             <?= esc($p['nome']) ?>
@@ -136,7 +139,7 @@
                         <div class="col-md-4">
                             <label class="form-label fw-bold">Categorias</label>
                             <div class="card card-body" style="max-height: 200px; overflow-y: auto;">
-                                <?php 
+                                <?php
                                 $selectedCategorias = [];
                                 if (isset($profissional['categorias'])) {
                                     $selectedCategorias = array_column($profissional['categorias'], 'categoria_id');
@@ -158,7 +161,7 @@
                         <div class="col-md-4">
                             <label class="form-label fw-bold">Atribuições</label>
                             <div class="card card-body" style="max-height: 200px; overflow-y: auto;">
-                                <?php 
+                                <?php
                                 $selectedAtribuicoes = [];
                                 if (isset($profissional['atribuicoes'])) {
                                     $selectedAtribuicoes = array_column($profissional['atribuicoes'], 'atribuicao_id');
@@ -176,6 +179,39 @@
                                     </div>
                                 <?php endforeach; ?>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIOMETRIA -->
+                <div class="tab-pane fade" id="biometria" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="photo" class="form-label">Foto</label>
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                            <?php if (!empty($profissional['photo'])): ?>
+                                <div class="mt-2 text-center">
+                                    <img src="<?= base_url('profissionais/arquivo/' . $profissional['id'] . '/' . $profissional['photo']) ?>" alt="Foto Atual" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="fingerprint" class="form-label">Impressão Digital</label>
+                            <input type="file" class="form-control" id="fingerprint" name="fingerprint" accept="image/*">
+                            <?php if (!empty($profissional['fingerprint'])): ?>
+                                <div class="mt-2 text-center">
+                                    <img src="<?= base_url('profissionais/arquivo/' . $profissional['id'] . '/' . $profissional['fingerprint']) ?>" alt="Digital Atual" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="signature" class="form-label">Assinatura</label>
+                            <input type="file" class="form-control" id="signature" name="signature" accept="image/*">
+                            <?php if (!empty($profissional['signature'])): ?>
+                                <div class="mt-2 text-center">
+                                    <img src="<?= base_url('profissionais/arquivo/' . $profissional['id'] . '/' . $profissional['signature']) ?>" alt="Assinatura Atual" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
