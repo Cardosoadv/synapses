@@ -8,7 +8,7 @@ class StoreUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // Controlado pelo Middleware/ACL futuramente
+        return $this->user() && $this->user()->role === 'admin';
     }
 
     public function rules(): array

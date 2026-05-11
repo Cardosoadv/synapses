@@ -16,8 +16,10 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Middlewares de Sessão
 Route::middleware(['auth'])->group(function () {
-    Route::resource('usuarios', UserController::class);
-    Route::post('usuarios/{usuario}/toggle-status', [UserController::class, 'toggleStatus'])->name('usuarios.toggle-status');
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('usuarios', UserController::class);
+        Route::post('usuarios/{usuario}/toggle-status', [UserController::class, 'toggleStatus'])->name('usuarios.toggle-status');
+    });
 
     // Processos e Tipos
     Route::resource('tipos-processos', TipoProcessoController::class)->except(['show']);
