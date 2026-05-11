@@ -37,4 +37,14 @@
     - Integração no sidebar principal.
 
 ---
+
+## [v1.2.0] - 2026-05-09
+### Adicionado
+- **Controle de Acesso Administrativo (ACL)**:
+    - Implementação do `AdminMiddleware` para restringir rotas sensíveis.
+    - Proteção das rotas de gestão de usuários (Web e API) apenas para o perfil `admin`.
+    - Reforço na autorização de Form Requests (`StoreUserRequest` i `UpdateUserRequest`).
+    - Suíte de testes de segurança automatizados para validar restrições de acesso.
+
+---
 *Assinado por: Antigravity AI*
