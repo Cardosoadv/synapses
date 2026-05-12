@@ -20,20 +20,20 @@ class UserController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $users = $this->userService->listar($request->all());
+        $users = $this->userService->listAll($request->all());
         return response()->json($users);
     }
 
     public function store(StoreUserRequest $request): JsonResponse
     {
-        $user = $this->userService->criar($request->validated());
+        $user = $this->userService->create($request->validated());
         return response()->json($user, 201);
     }
 
     public function show(int $id): JsonResponse
     {
         try {
-            $user = $this->userService->buscarPorId($id);
+            $user = $this->userService->findById($id);
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
@@ -42,13 +42,13 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse
     {
-        $user = $this->userService->atualizar($id, $request->validated());
+        $user = $this->userService->update($id, $request->validated());
         return response()->json($user);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        $this->userService->deletar($id);
+        $this->userService->delete($id);
         return response()->json(null, 204);
     }
 

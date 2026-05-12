@@ -3,17 +3,40 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Processo\StoreProcessoRequest;
+use App\Http\Requests\Processo\UpdateProcessoStatusRequest;
 use App\Services\ProcessoService;
 use App\Services\TipoProcessoService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
+/**
+ * Class ProcessoController
+ * @package App\Http\Controllers\Web
+ */
 class ProcessoController extends Controller
 {
+    /**
+     * @var ProcessoService
+     */
     protected $service;
+
+    /**
+     * @var TipoProcessoService
+     */
     protected $tipoService;
+
+    /**
+     * @var UserService
+     */
     protected $userService;
 
+    /**
+     * ProcessoController constructor.
+     * @param ProcessoService $service
+     * @param TipoProcessoService $tipoService
+     * @param UserService $userService
+     */
     public function __construct(
         ProcessoService $service, 
         TipoProcessoService $tipoService,
@@ -24,6 +47,11 @@ class ProcessoController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $processos = $this->service->listAll($request->all());
@@ -31,46 +59,59 @@ class ProcessoController extends Controller
         return view('processos.index', compact('processos', 'tipos'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $tipos = $this->tipoService->getAllActive();
-        $usuarios = $this->userService->listar(['is_active' => true]); 
+        $usuarios = $this->userService->listAll(['is_active' => true]);
         return view('processos.create', compact('tipos', 'usuarios'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     * @param StoreProcessoRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreProcessoRequest $request)
     {
-        $validated = $request->validate([
-            'tipo_processo_id' => 'required|exists:tipos_processos,id',
-            'interessado_id' => 'nullable|exists:users,id',
-            'assunto' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'nivel_acesso' => 'required|in:publico,restrito,sigiloso',
-        ]);
-
-        $this->service->create($validated);
+        $this->service->create($request->validated());
 
         return redirect()->route('processos.index')
             ->with('success', 'Processo registrado com sucesso.');
     }
 
+    /**
+     * Display the specified resource.
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
     public function show($id)
     {
         $processo = $this->service->findById($id);
         return view('processos.show', compact('processo'));
     }
 
-    public function updateStatus(Request $request, $id)
+    /**
+     * Update the status of the specified resource.
+     * @param UpdateProcessoStatusRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatus(UpdateProcessoStatusRequest $request, $id)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:aberto,em_analise,concluido,arquivado',
-        ]);
-
-        $this->service->update($id, $validated);
+        $this->service->update($id, $request->validated());
 
         return back()->with('success', 'Status do processo atualizado.');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $this->service->delete($id);

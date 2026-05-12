@@ -5,25 +5,54 @@ namespace App\Services;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
 use Carbon\Carbon;
 
+/**
+ * Class ProcessoService
+ * @package App\Services
+ */
 class ProcessoService
 {
+    /**
+     * @var ProcessoRepositoryInterface
+     */
     protected $repository;
 
+    /**
+     * ProcessoService constructor.
+     * @param ProcessoRepositoryInterface $repository
+     */
     public function __construct(ProcessoRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
 
+    /**
+     * List all processes with optional filters.
+     *
+     * @param array $filters
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
     public function listAll(array $filters = [])
     {
         return $this->repository->paginate(15, $filters);
     }
 
+    /**
+     * Find a process by ID.
+     *
+     * @param int $id
+     * @return \App\Models\Processo|null
+     */
     public function findById(int $id)
     {
         return $this->repository->findById($id);
     }
 
+    /**
+     * Create a new process.
+     *
+     * @param array $data
+     * @return \App\Models\Processo
+     */
     public function create(array $data)
     {
         $data['numero'] = $this->generateProcessNumber();
@@ -33,6 +62,13 @@ class ProcessoService
         return $this->repository->create($data);
     }
 
+    /**
+     * Update an existing process.
+     *
+     * @param int $id
+     * @param array $data
+     * @return \App\Models\Processo
+     */
     public function update(int $id, array $data)
     {
         if (isset($data['status']) && $data['status'] === 'concluido') {
@@ -42,11 +78,22 @@ class ProcessoService
         return $this->repository->update($id, $data);
     }
 
+    /**
+     * Delete a process by ID.
+     *
+     * @param int $id
+     * @return bool
+     */
     public function delete(int $id)
     {
         return $this->repository->delete($id);
     }
 
+    /**
+     * Generate a unique process number.
+     *
+     * @return string
+     */
     protected function generateProcessNumber()
     {
         $year = Carbon::now()->year;

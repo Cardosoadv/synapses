@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function index(Request $request): View
     {
-        $usuarios = $this->userService->listar($request->all());
+        $usuarios = $this->userService->listAll($request->all());
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -32,25 +32,25 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $this->userService->criar($request->validated());
+        $this->userService->create($request->validated());
         return redirect()->route('usuarios.index')->with('success', 'Usuário criado com sucesso!');
     }
 
     public function edit(int $id): View
     {
-        $usuario = $this->userService->buscarPorId($id);
+        $usuario = $this->userService->findById($id);
         return view('usuarios.form', compact('usuario'));
     }
 
     public function update(UpdateUserRequest $request, int $id): RedirectResponse
     {
-        $this->userService->atualizar($id, $request->validated());
+        $this->userService->update($id, $request->validated());
         return redirect()->route('usuarios.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     public function destroy(int $id): RedirectResponse
     {
-        $this->userService->deletar($id);
+        $this->userService->delete($id);
         return redirect()->route('usuarios.index')->with('success', 'Usuário removido.');
     }
 
