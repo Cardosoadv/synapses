@@ -51,10 +51,12 @@ class ProcessoRepository implements ProcessoRepositoryInterface
 
     public function getLatestProcessNumber(int $year): ?string
     {
-        $latest = $this->model->whereYear('data_abertura', $year)
+        $latest = $this->model
+            ->where('data_abertura', '>=', "{$year}-01-01 00:00:00")
+            ->where('data_abertura', '<', ($year + 1) . "-01-01 00:00:00")
             ->orderBy('numero', 'desc')
             ->first();
-            
+
         return $latest ? $latest->numero : null;
     }
 
