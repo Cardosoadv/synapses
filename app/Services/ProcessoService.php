@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ProcessoService
@@ -17,12 +20,21 @@ class ProcessoService
     protected $repository;
 
     /**
+     * @var MovimentacaoRepositoryInterface
+     */
+    protected $movimentacaoRepository;
+
+    /**
      * ProcessoService constructor.
      * @param ProcessoRepositoryInterface $repository
+     * @param MovimentacaoRepositoryInterface $movimentacaoRepository
      */
-    public function __construct(ProcessoRepositoryInterface $repository)
-    {
+    public function __construct(
+        ProcessoRepositoryInterface $repository,
+        MovimentacaoRepositoryInterface $movimentacaoRepository
+    ) {
         $this->repository = $repository;
+        $this->movimentacaoRepository = $movimentacaoRepository;
     }
 
     /**
@@ -55,11 +67,23 @@ class ProcessoService
      */
     public function create(array $data)
     {
-        $data['numero'] = $this->generateProcessNumber();
-        $data['data_abertura'] = Carbon::now();
-        $data['status'] = 'aberto';
-        
-        return $this->repository->create($data);
+        return DB::transaction(function () use ($data) {
+            $data['numero'] = $this->generateProcessNumber();
+            $data['data_abertura'] = Carbon::now();
+            $data['status'] = 'aberto';
+
+            $processo = $this->repository->create($data);
+
+            $this->movimentacaoRepository->create([
+                'processo_id' => $processo->id,
+                'user_id' => Auth::id(),
+                'status_anterior' => null,
+                'status_novo' => 'aberto',
+                'observacao' => 'Abertura do processo.'
+            ]);
+
+            return $processo;
+        });
     }
 
     /**
@@ -71,11 +95,28 @@ class ProcessoService
      */
     public function update(int $id, array $data)
     {
-        if (isset($data['status']) && $data['status'] === 'concluido') {
-            $data['data_fechamento'] = Carbon::now();
-        }
-        
-        return $this->repository->update($id, $data);
+        return DB::transaction(function () use ($id, $data) {
+            $processo = $this->repository->findById($id);
+            $oldStatus = $processo->status;
+
+            if (isset($data['status']) && $data['status'] === 'concluido') {
+                $data['data_fechamento'] = Carbon::now();
+            }
+
+            $updatedProcesso = $this->repository->update($id, $data);
+
+            if (isset($data['status']) && $data['status'] !== $oldStatus) {
+                $this->movimentacaoRepository->create([
+                    'processo_id' => $id,
+                    'user_id' => Auth::id(),
+                    'status_anterior' => $oldStatus,
+                    'status_novo' => $data['status'],
+                    'observacao' => 'Alteração de status do processo.'
+                ]);
+            }
+
+            return $updatedProcesso;
+        });
     }
 
     /**
