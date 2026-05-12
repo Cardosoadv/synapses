@@ -36,4 +36,9 @@ class Processo extends Model
     {
         return $this->belongsTo(User::class, 'interessado_id');
     }
+
+    public function movimentacoes()
+    {
+        return $this->hasMany(Movimentacao::class);
+    }
 }
