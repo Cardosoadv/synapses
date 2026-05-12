@@ -74,13 +74,25 @@
             </div>
 
             <div class="glass" style="padding: 1.5rem;">
-                <h3 class="card-title-small">Timeline</h3>
+                <h3 class="card-title-small">Histórico de Movimentações</h3>
                 <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="info-label-small">{{ $processo->data_abertura->format('d/m/Y H:i') }}</div>
-                        <div class="td-main">Processo Criado</div>
-                    </div>
+                    @forelse($processo->movimentacoes->sortByDesc('created_at') as $movimentacao)
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="info-label-small">{{ $movimentacao->created_at->format('d/m/Y H:i') }}</div>
+                            <div class="td-main">
+                                <strong>{{ ucfirst(str_replace('_', ' ', $movimentacao->status_novo)) }}</strong>
+                                <p style="font-size: 0.85rem; margin-top: 0.25rem;">{{ $movimentacao->observacao }}</p>
+                                <small class="text-muted">Por: {{ $movimentacao->user->name ?? 'Sistema' }}</small>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="info-label-small">{{ $processo->data_abertura->format('d/m/Y H:i') }}</div>
+                            <div class="td-main">Processo Criado</div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
