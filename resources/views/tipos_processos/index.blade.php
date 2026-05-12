@@ -3,18 +3,18 @@
 @section('title', 'Tipos de Processos')
 
 @section('content')
-<div class="glass" style="padding: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+<div class="glass section-glass">
+    <div class="page-header">
         <div>
-            <h1 style="margin: 0; font-size: 1.5rem;">Tipos de Processos</h1>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Gerencie as categorias de processos do sistema.</p>
+            <h1>Tipos de Processos</h1>
+            <p>Gerencie as categorias de processos do sistema.</p>
         </div>
         <a href="{{ route('tipos-processos.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i> Novo Tipo
         </a>
     </div>
 
-    <div style="overflow-x: auto;">
+    <div class="table-responsive">
         <table>
             <thead>
                 <tr>
@@ -29,8 +29,8 @@
                 @forelse($tipos as $tipo)
                 <tr>
                     <td>
-                        <div style="font-weight: 500;">{{ $tipo->nome }}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">{{ Str::limit($tipo->descricao, 50) }}</div>
+                        <div class="td-main">{{ $tipo->nome }}</div>
+                        <div class="td-sub">{{ Str::limit($tipo->descricao, 50) }}</div>
                     </td>
                     <td><span class="badge badge-manager">{{ $tipo->prefixo ?? '-' }}</span></td>
                     <td>{{ $tipo->prazo_conclusao ?? 'N/A' }}</td>
@@ -42,14 +42,14 @@
                         @endif
                     </td>
                     <td>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <a href="{{ route('tipos-processos.edit', $tipo->id) }}" class="btn btn-outline" style="padding: 0.4rem 0.8rem;" title="Editar">
+                        <div class="td-actions">
+                            <a href="{{ route('tipos-processos.edit', $tipo->id) }}" class="btn btn-outline btn-action" title="Editar" aria-label="Editar tipo de processo {{ $tipo->nome }}">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <form action="{{ route('tipos-processos.destroy', $tipo->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este tipo?')">
+                            <form action="{{ route('tipos-processos.destroy', $tipo->id) }}" method="POST" data-confirm="Tem certeza que deseja excluir este tipo?">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline" style="padding: 0.4rem 0.8rem; color: var(--danger);" title="Excluir">
+                                <button type="submit" class="btn btn-outline btn-action btn-delete" title="Excluir" aria-label="Excluir tipo de processo {{ $tipo->nome }}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -58,7 +58,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                    <td colspan="5" class="table-empty">
                         Nenhum tipo de processo encontrado.
                     </td>
                 </tr>
@@ -67,7 +67,7 @@
         </table>
     </div>
 
-    <div style="margin-top: 2rem;">
+    <div class="pagination-wrapper">
         {{ $tipos->links() }}
     </div>
 </div>

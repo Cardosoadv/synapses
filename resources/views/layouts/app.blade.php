@@ -6,48 +6,44 @@
     <title>Synapses GED - @yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <style>
-        .alert { padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
-        .alert-success { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success); color: #4ade80; }
-        .alert-error { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: #f87171; }
-    </style>
+    <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
 </head>
 <body>
     @auth
     <div class="sidebar">
-        <h2 style="color: var(--primary); margin-bottom: 2rem;">Synapses <span style="font-weight: 300;">GED</span></h2>
+        <h2>Synapses <span style="font-weight: 300;">GED</span></h2>
         
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}" style="display: block; padding: 0.75rem; color: white; text-decoration: none; border-radius: 0.5rem; background: {{ request()->routeIs('usuarios.*') ? 'rgba(255,255,255,0.1)' : 'transparent' }};">
+            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
                 <i class="bi bi-people" style="margin-right: 0.5rem;"></i> Usuários
             </a>
             
-            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}" style="display: block; padding: 0.75rem; color: white; text-decoration: none; border-radius: 0.5rem; margin-top: 0.5rem; background: {{ request()->routeIs('processos.*') ? 'rgba(255,255,255,0.1)' : 'transparent' }};">
+            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}">
                 <i class="bi bi-folder" style="margin-right: 0.5rem;"></i> Processos
             </a>
 
-            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}" style="display: block; padding: 0.75rem; color: white; text-decoration: none; border-radius: 0.5rem; margin-top: 0.5rem; background: {{ request()->routeIs('tipos-processos.*') ? 'rgba(255,255,255,0.1)' : 'transparent' }};">
+            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}">
                 <i class="bi bi-tags" style="margin-right: 0.5rem;"></i> Tipos de Processos
             </a>
 
-            <a href="#" style="display: block; padding: 0.75rem; color: var(--text-muted); text-decoration: none; margin-top: 0.5rem;">
+            <a href="#">
                 <i class="bi bi-file-earmark-text" style="margin-right: 0.5rem;"></i> Documentos
             </a>
         </nav>
 
-        <div style="position: absolute; bottom: 2rem; width: calc(100% - 2rem);">
-            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--border); margin-right: 0.75rem; display: flex; align-items: center; justify-content: center;">
+        <div class="sidebar-profile">
+            <div class="sidebar-profile-info">
+                <div class="sidebar-profile-avatar">
                     <i class="bi bi-person"></i>
                 </div>
                 <div>
-                    <div style="font-weight: 600; font-size: 0.875rem;">{{ Auth::user()->name }}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted);">{{ Auth::user()->role }}</div>
+                    <div class="sidebar-profile-name">{{ Auth::user()->name }}</div>
+                    <div class="sidebar-profile-role">{{ Auth::user()->role }}</div>
                 </div>
             </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-outline" style="width: 100%; text-align: left;">
+                <button type="submit" class="btn btn-outline sidebar-logout-btn">
                     <i class="bi bi-box-arrow-right"></i> Sair
                 </button>
             </form>
@@ -62,7 +58,7 @@
 
         @if($errors->any())
             <div class="alert alert-error">
-                <ul style="margin: 0; padding-left: 1.25rem;">
+                <ul>
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -73,6 +69,9 @@
         @yield('content')
     </div>
 
+    <script src="{{ asset('dist/js/app/app.core.js') }}"></script>
+    <script src="{{ asset('dist/js/app/modules/app.processos.js') }}"></script>
+    <script src="{{ asset('dist/js/app/modules/app.usuarios.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

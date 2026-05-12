@@ -37,4 +37,15 @@
     - Integração no sidebar principal.
 
 ---
+
+## [v1.2.0] - 2026-05-09
+### Adicionado
+- **Centralização de Recursos**: Implementação de `public/dist/css/style.css` e módulos JS em `public/dist/js/app/`.
+- **Acessibilidade (A11y)**:
+    - Suporte a navegação por teclado com `:focus-visible`.
+    - Labels de acessibilidade (`aria-label`) em todos os elementos de ação.
+    - Suporte a eventos de teclado para elementos não-semânticos.
+- **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
+
+---
 *Assinado por: Antigravity AI*

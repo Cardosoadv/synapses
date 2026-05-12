@@ -3,25 +3,25 @@
 @section('title', 'Processos')
 
 @section('content')
-<div class="glass" style="padding: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+<div class="glass section-glass">
+    <div class="page-header">
         <div>
-            <h1 style="margin: 0; font-size: 1.5rem;">Processos</h1>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Registro e acompanhamento de processos administrativos.</p>
+            <h1>Processos</h1>
+            <p>Registro e acompanhamento de processos administrativos.</p>
         </div>
         <a href="{{ route('processos.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i> Novo Processo
         </a>
     </div>
 
-    <div style="margin-bottom: 2rem; display: flex; gap: 1rem; align-items: flex-end;">
-        <form action="{{ route('processos.index') }}" method="GET" style="display: flex; gap: 1rem; flex-grow: 1;">
-            <div style="flex-grow: 1;">
-                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.75rem;">Buscar</label>
+    <div class="filters-bar">
+        <form action="{{ route('processos.index') }}" method="GET">
+            <div class="filter-group">
+                <label class="form-label">Buscar</label>
                 <input type="text" name="search" class="form-control" placeholder="Número ou assunto..." value="{{ request('search') }}">
             </div>
             <div>
-                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.75rem;">Tipo</label>
+                <label class="form-label">Tipo</label>
                 <select name="tipo_processo_id" class="form-control" style="width: 200px;">
                     <option value="">Todos os Tipos</option>
                     @foreach($tipos as $tipo)
@@ -30,7 +30,7 @@
                 </select>
             </div>
             <div>
-                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.75rem;">Status</label>
+                <label class="form-label">Status</label>
                 <select name="status" class="form-control" style="width: 150px;">
                     <option value="">Todos</option>
                     <option value="aberto" {{ request('status') == 'aberto' ? 'selected' : '' }}>Aberto</option>
@@ -45,7 +45,7 @@
         </form>
     </div>
 
-    <div style="overflow-x: auto;">
+    <div class="table-responsive">
         <table>
             <thead>
                 <tr>
@@ -61,8 +61,8 @@
                 @forelse($processos as $processo)
                 <tr>
                     <td>
-                        <div style="font-weight: 700; color: var(--primary);">{{ $processo->numero }}</div>
-                        <div style="font-size: 0.875rem;">{{ $processo->assunto }}</div>
+                        <div class="td-numero">{{ $processo->numero }}</div>
+                        <div class="td-assunto">{{ $processo->assunto }}</div>
                     </td>
                     <td>
                         <span class="badge badge-manager">{{ $processo->tipoProcesso->nome }}</span>
@@ -80,20 +80,20 @@
                         <span class="badge {{ $statusClass }}">{{ ucfirst(str_replace('_', ' ', $processo->status)) }}</span>
                     </td>
                     <td>
-                        <span style="font-size: 0.75rem; text-transform: uppercase;">
+                        <span class="td-acesso">
                             <i class="bi {{ $processo->nivel_acesso === 'publico' ? 'bi-unlock' : 'bi-lock' }}"></i>
                             {{ $processo->nivel_acesso }}
                         </span>
                     </td>
                     <td>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <a href="{{ route('processos.show', $processo->id) }}" class="btn btn-outline" style="padding: 0.4rem 0.8rem;" title="Ver Detalhes">
+                        <div class="td-actions">
+                            <a href="{{ route('processos.show', $processo->id) }}" class="btn btn-outline btn-action" title="Ver Detalhes" aria-label="Ver detalhes do processo {{ $processo->numero }}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <form action="{{ route('processos.destroy', $processo->id) }}" method="POST" onsubmit="return confirm('Excluir este processo?')">
+                            <form action="{{ route('processos.destroy', $processo->id) }}" method="POST" data-confirm="Excluir este processo?">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline" style="padding: 0.4rem 0.8rem; color: var(--danger);" title="Excluir">
+                                <button type="submit" class="btn btn-outline btn-action btn-delete" title="Excluir" aria-label="Excluir processo {{ $processo->numero }}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -102,7 +102,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                    <td colspan="6" class="table-empty">
                         Nenhum processo encontrado.
                     </td>
                 </tr>
@@ -111,7 +111,7 @@
         </table>
     </div>
 
-    <div style="margin-top: 2rem;">
+    <div class="pagination-wrapper">
         {{ $processos->links() }}
     </div>
 </div>
