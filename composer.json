@@ -1,10 +1,10 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
-    "version": "1.1.0",
+    "name": "synapses/erp-ged-conselhos",
+    "version": "1.1.0-alpha",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Sistema de código aberto para gestão de conselhos profissionais, cobrindo atividades finalísticas e atividades meio.",
+    "keywords": ["conselhos profissionais", "gestão", "fiscalização", "registro profissional", "ged", "open source", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^8.3",
