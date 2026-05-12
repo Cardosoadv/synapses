@@ -37,4 +37,15 @@
     - Integração no sidebar principal.
 
 ---
-*Assinado por: Antigravity AI*
+
+## [v1.2.0] - 2026-05-12
+### Adicionado
+- **Otimização de Performance**:
+    - Implementação de índices estratégicos nas tabelas `processos`, `tipos_processos` e `users` para acelerar filtros e ordenações comuns.
+- **Melhoria de Consultas (SARGability)**:
+    - Otimização da busca pelo último número de processo, substituindo `whereYear` por uma consulta de intervalo (`whereBetween`), permitindo o uso eficiente de índices.
+- **Testes de Unidade**:
+    - Adição de `ProcessoRepositoryTest` para garantir a integridade da lógica de numeração de processos.
+
+---
+*Assinado por: Bolt Agent*
