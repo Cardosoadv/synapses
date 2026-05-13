@@ -46,6 +46,10 @@
     - Labels de acessibilidade (`aria-label`) em todos os elementos de ação.
     - Suporte a eventos de teclado para elementos não-semânticos.
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
+- **Micro-UX e Feedback**:
+    - Indicadores visuais de campos obrigatórios via CSS (`.form-label-required`).
+    - Atributos `aria-current` para melhor feedback de navegação.
+    - `role="alert"` para notificações dinâmicas.
 
 ---
-*Assinado por: Antigravity AI*
+*Assinado por: Jules (Palette)*

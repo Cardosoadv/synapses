@@ -16,14 +16,14 @@
             <form action="{{ route('processos.update-status', $processo->id) }}" method="POST" id="status-form">
                 @csrf
                 @method('PATCH')
-                <select name="status" class="form-control status-select" style="width: auto; background: var(--bg-card);" aria-label="Alterar status do processo">
+                <select name="status" class="form-control status-select" aria-label="Alterar status do processo">
                     <option value="aberto" {{ $processo->status === 'aberto' ? 'selected' : '' }}>Aberto</option>
                     <option value="em_analise" {{ $processo->status === 'em_analise' ? 'selected' : '' }}>Em Análise</option>
                     <option value="concluido" {{ $processo->status === 'concluido' ? 'selected' : '' }}>Concluído</option>
                     <option value="arquivado" {{ $processo->status === 'arquivado' ? 'selected' : '' }}>Arquivado</option>
                 </select>
             </form>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" title="Adicionar novo documento" aria-label="Adicionar novo documento ao processo">
                 <i class="bi bi-file-earmark-plus"></i> Adicionar Documento
             </button>
         </div>
@@ -51,15 +51,15 @@
         </div>
 
         <div class="sidebar-stack">
-            <div class="glass" style="padding: 1.5rem;">
+            <div class="glass p-1-5">
                 <h3 class="card-title-small">Classificação</h3>
                 
-                <div style="margin-bottom: 1rem;">
+                <div class="mb-1">
                     <label class="info-label-small">Tipo</label>
                     <div class="info-value-bold">{{ $processo->tipoProcesso->nome }}</div>
                 </div>
 
-                <div style="margin-bottom: 1rem;">
+                <div class="mb-1">
                     <label class="info-label-small">Nível de Acesso</label>
                     <div class="text-capitalize">
                         <i class="bi {{ $processo->nivel_acesso === 'publico' ? 'bi-unlock' : 'bi-lock' }}"></i>
@@ -67,13 +67,13 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 1rem;">
+                <div class="mb-1">
                     <label class="info-label-small">Interessado</label>
                     <div>{{ $processo->interessado->name ?? 'Não informado' }}</div>
                 </div>
             </div>
 
-            <div class="glass" style="padding: 1.5rem;">
+            <div class="glass p-1-5">
                 <h3 class="card-title-small">Histórico de Movimentações</h3>
                 <div class="timeline">
                     @forelse($processo->movimentacoes->sortByDesc('created_at') as $movimentacao)
@@ -82,7 +82,7 @@
                             <div class="info-label-small">{{ $movimentacao->created_at->format('d/m/Y H:i') }}</div>
                             <div class="td-main">
                                 <strong>{{ ucfirst(str_replace('_', ' ', $movimentacao->status_novo)) }}</strong>
-                                <p style="font-size: 0.85rem; margin-top: 0.25rem;">{{ $movimentacao->observacao }}</p>
+                                <p class="history-obs">{{ $movimentacao->observacao }}</p>
                                 <small class="text-muted">Por: {{ $movimentacao->user->name ?? 'Sistema' }}</small>
                             </div>
                         </div>

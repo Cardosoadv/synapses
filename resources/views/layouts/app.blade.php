@@ -11,23 +11,23 @@
 <body>
     @auth
     <div class="sidebar">
-        <h2>Synapses <span style="font-weight: 300;">GED</span></h2>
+        <h2 class="sidebar-logo">Synapses <span class="sidebar-logo-span">GED</span></h2>
         
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
-                <i class="bi bi-people" style="margin-right: 0.5rem;"></i> Usuários
+            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}" {!! request()->routeIs('usuarios.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-people sidebar-nav-icon"></i> Usuários
             </a>
             
-            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}">
-                <i class="bi bi-folder" style="margin-right: 0.5rem;"></i> Processos
+            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}" {!! request()->routeIs('processos.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-folder sidebar-nav-icon"></i> Processos
             </a>
 
-            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}">
-                <i class="bi bi-tags" style="margin-right: 0.5rem;"></i> Tipos de Processos
+            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}" {!! request()->routeIs('tipos-processos.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-tags sidebar-nav-icon"></i> Tipos de Processos
             </a>
 
-            <a href="#">
-                <i class="bi bi-file-earmark-text" style="margin-right: 0.5rem;"></i> Documentos
+            <a href="#" {!! request()->is('documentos*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-file-earmark-text sidebar-nav-icon"></i> Documentos
             </a>
         </nav>
 
@@ -53,11 +53,11 @@
 
     <div class="@auth main-content @endauth">
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
 
         @if($errors->any())
-            <div class="alert alert-error">
+            <div class="alert alert-error" role="alert">
                 <ul>
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
