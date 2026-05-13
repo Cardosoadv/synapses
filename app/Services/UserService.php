@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\BaseRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,7 +35,7 @@ class UserService
      */
     public function listAll(array $filters = [])
     {
-        return $this->repository->paginate(15, $filters);
+        return $this->repository->paginate(BaseRepositoryInterface::DEFAULT_PER_PAGE, $filters);
     }
 
     /**

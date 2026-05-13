@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ProcessoController;
+use App\Http\Controllers\Api\TipoProcessoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +25,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::apiResource('users', UserController::class);
     Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus']);
+
+    Route::apiResource('processos', ProcessoController::class);
+    Route::apiResource('tipos-processos', TipoProcessoController::class);
 });

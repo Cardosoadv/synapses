@@ -38,7 +38,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator
+    public function paginate(int $perPage = self::DEFAULT_PER_PAGE, array $filters = []): LengthAwarePaginator
     {
         return $this->applyFilters($this->model->query(), $filters)->paginate($perPage);
     }
