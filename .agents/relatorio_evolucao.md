@@ -48,4 +48,12 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-13
+### Otimizado
+- **Performance de Consultas**: Otimização do método `getLatestProcessNumber` no `ProcessoRepository`.
+    - Substituição do uso de `whereYear()` (não-SARGable) por comparação de intervalo de datas.
+    - Esta mudança permite que o banco de dados utilize índices na coluna `data_abertura`, eliminando a necessidade de "full table scans" e melhorando drasticamente a performance em bases de dados volumosas.
+
+---
 *Assinado por: Antigravity AI*
