@@ -34,7 +34,7 @@ class UserService
      */
     public function listAll(array $filters = [])
     {
-        return $this->repository->paginate(15, $filters);
+        return $this->repository->paginate($this->repository::DEFAULT_PER_PAGE, $filters);
     }
 
     /**

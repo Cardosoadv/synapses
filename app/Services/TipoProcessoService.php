@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\TipoProcesso;
 use App\Repositories\Contracts\TipoProcessoRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -33,7 +35,7 @@ class TipoProcessoService
      */
     public function listAll(array $filters = [])
     {
-        return $this->repository->paginate(15, $filters);
+        return $this->repository->paginate($this->repository::DEFAULT_PER_PAGE, $filters);
     }
 
     /**
@@ -50,11 +52,16 @@ class TipoProcessoService
      * Find a process type by ID.
      *
      * @param int $id
-     * @return \App\Models\TipoProcesso|null
+     * @return \App\Models\TipoProcesso
+     * @throws ModelNotFoundException
      */
     public function findById(int $id)
     {
-        return $this->repository->findById($id);
+        $tipo = $this->repository->findById($id);
+        if (!$tipo) {
+            throw (new ModelNotFoundException())->setModel(TipoProcesso::class, [$id]);
+        }
+        return $tipo;
     }
 
     /**

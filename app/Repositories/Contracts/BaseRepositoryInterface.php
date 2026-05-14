@@ -13,6 +13,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface BaseRepositoryInterface
 {
     /**
+     * Default number of items per page for pagination.
+     */
+    public const DEFAULT_PER_PAGE = 15;
+
+    /**
      * Find all records with optional filters.
      *
      * @param array $filters
@@ -27,7 +32,7 @@ interface BaseRepositoryInterface
      * @param array $filters
      * @return LengthAwarePaginator
      */
-    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator;
+    public function paginate(int $perPage = self::DEFAULT_PER_PAGE, array $filters = []): LengthAwarePaginator;
 
     /**
      * Find a record by ID.
