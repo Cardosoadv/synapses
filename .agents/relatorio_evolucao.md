@@ -48,4 +48,12 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
-*Assinado por: Antigravity AI*
+
+## [v1.3.0] - 2026-05-14
+### Otimizado
+- **N+1 Query Resolution**: Implementação de eager loading para movimentações e usuários na visualização de detalhes do processo, reduzindo significativamente o número de consultas ao banco de dados.
+- **SARGable Queries**: Refatoração da busca pelo último número de processo para utilizar comparações de intervalo de datas, permitindo o uso eficiente de índices.
+- **Performance Indexing**: Adição de índices estratégicos nas tabelas `processos`, `tipos_processos` e `users` para acelerar filtragens e ordenações frequentes.
+
+---
+*Assinado por: Bolt Agent*
