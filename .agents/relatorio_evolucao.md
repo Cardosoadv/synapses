@@ -47,5 +47,20 @@
     - Suporte a eventos de teclado para elementos não-semânticos.
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
+## [v1.3.0] - 2026-05-10
+### Adicionado
+- **Sistema de Utilidades CSS**: Introdução de classes utilitárias para layout, espaçamento e tipografia (`.w-200`, `.mb-1`, `.fs-1-5`, etc.) em `style.css`.
+- **Indicadores de Campos Obrigatórios**: Implementação da classe `.form-label-required` que utiliza pseudo-elementos CSS para padronizar a sinalização de campos mandatórios.
+- **Melhorias de Acessibilidade (A11y - Fase 2)**:
+    - Uso de `aria-current="page"` para indicar a página ativa na navegação lateral.
+    - Remoção de atributos ARIA redundantes em elementos semânticos.
+    - Garantia de `aria-label` e `title` em todos os botões de ação e filtros.
+- **Refatoração Completa do Login**: Migração total dos estilos inline da página de login para o sistema de utilidades centralizado.
+
+### Lições Aprendidas
+- A centralização de utilidades CSS promove uma interface muito mais consistente e reduz drasticamente o esforço de manutenção.
+- O uso de pseudo-elementos para sinalização visual (como asteriscos em formulários) mantém o HTML semântico e limpo.
+- Testes automatizados de redirecionamento (como o da rota raiz) devem refletir fielmente a lógica de rotas do sistema para evitar falsos negativos.
+
 ---
-*Assinado por: Antigravity AI*
+*Assinado por: Palette Agent*

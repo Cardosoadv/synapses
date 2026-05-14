@@ -8,7 +8,7 @@
         <a href="{{ route('processos.index') }}" class="back-link">
             <i class="bi bi-arrow-left"></i> Voltar para a lista
         </a>
-        <h1 class="form-label-md" style="margin-top: 1rem; font-size: 1.5rem;">Novo Processo</h1>
+        <h1 class="form-label-md mt-1 fs-1-5">Novo Processo</h1>
         <p class="info-label">A numeração será gerada automaticamente após o salvamento.</p>
     </div>
 
@@ -18,7 +18,7 @@
             
             <div class="grid-2nd form-group">
                 <div>
-                    <label class="form-label">Tipo de Processo *</label>
+                    <label class="form-label form-label-required">Tipo de Processo</label>
                     <select name="tipo_processo_id" class="form-control" required>
                         <option value="">Selecione o tipo...</option>
                         @foreach($tipos as $tipo)
@@ -38,12 +38,12 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Assunto *</label>
+                <label class="form-label form-label-required">Assunto</label>
                 <input type="text" name="assunto" class="form-control" value="{{ old('assunto') }}" required placeholder="Título ou resumo do processo">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Nível de Acesso *</label>
+                <label class="form-label form-label-required">Nível de Acesso</label>
                 <div class="radio-group">
                     <label class="radio-label">
                         <input type="radio" name="nivel_acesso" value="publico" {{ old('nivel_acesso', 'publico') === 'publico' ? 'checked' : '' }}>
@@ -65,7 +65,7 @@
                 <textarea name="descricao" class="form-control" rows="6" placeholder="Forneça detalhes adicionais sobre o processo...">{{ old('descricao') }}</textarea>
             </div>
 
-            <div class="td-actions td-actions-end" style="margin-top: 2rem;">
+            <div class="td-actions td-actions-end mt-2">
                 <a href="{{ route('processos.index') }}" class="btn btn-outline">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Gerar Processo</button>
             </div>
