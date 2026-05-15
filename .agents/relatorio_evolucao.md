@@ -48,4 +48,15 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-10
+### Adicionado
+- **Padronização e Robustez**:
+    - Implementação da constante `DEFAULT_PER_PAGE` na `BaseRepositoryInterface` para uniformizar a paginação.
+    - Padronização do método `findById` nos serviços `ProcessoService` e `TipoProcessoService` para lançar `ModelNotFoundException`, garantindo consistência com o `UserService`.
+    - Implementação de `getSystemUserId()` no `ProcessoService` como fallback para o `admin@synapses.com` em contextos sem autenticação (CLI/Seeding).
+- **Correções Técnicas**:
+    - Correção do teste `ExampleTest.php` para validar o redirecionamento (302) da rota raiz.
+
+---
 *Assinado por: Antigravity AI*
