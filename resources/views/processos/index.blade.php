@@ -49,12 +49,12 @@
         <table>
             <thead>
                 <tr>
-                    <th>Número / Assunto</th>
-                    <th>Tipo</th>
-                    <th>Interessado</th>
-                    <th>Status</th>
-                    <th>Acesso</th>
-                    <th>Ações</th>
+                    <th scope="col">Número / Assunto</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Interessado</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Acesso</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>

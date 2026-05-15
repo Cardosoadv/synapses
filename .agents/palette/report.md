@@ -19,7 +19,15 @@
 - `resources/views/layouts/app.blade.php`: Included new CSS/JS and removed inline styles.
 - `resources/views/processos/index.blade.php`, `show.blade.php`, `create.blade.php`: UX and accessibility updates.
 - `resources/views/usuarios/index.blade.php`, `form.blade.php`: UX and accessibility updates.
-- `resources/views/tipos_processos/index.blade.php`: UX and accessibility updates.
+- `resources/views/tipos_processos/index.blade.php`: UX and accessibility updates and table `scope="col"`.
+- `resources/views/auth/login.blade.php`: Style centralization and utility class usage.
+- `resources/views/layouts/app.blade.php`: Accessibility improvements (aria-current, role="alert").
+
+## Improvements Implemented
+- **Centralized Login Styles**: Moved all inline styles from `auth/login.blade.php` to `style.css`.
+- **Global Table Accessibility**: Added `scope="col"` to all `<th>` elements in index views.
+- **Form Visual Feedback**: Implemented `.form-label-required` CSS class for mandatory fields with red asterisks.
+- **Layout ARIA roles**: Added `role="alert"` to flash messages and `aria-current="page"` to active sidebar links.
 
 ## Lessons Learned
 - Centralizing styles early prevents "style soup" in Blade templates and improves maintainability.

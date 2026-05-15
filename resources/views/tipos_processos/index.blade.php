@@ -18,11 +18,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Prefixo</th>
-                    <th>Prazo (Dias)</th>
-                    <th>Status</th>
-                    <th>Ações</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Prefixo</th>
+                    <th scope="col">Prazo (Dias)</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>

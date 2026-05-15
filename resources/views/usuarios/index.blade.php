@@ -17,12 +17,12 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Perfil</th>
-                <th>Status</th>
-                <th>Último Login</th>
-                <th class="text-right">Ações</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Status</th>
+                <th scope="col">Último Login</th>
+                <th scope="col" class="text-right">Ações</th>
             </tr>
         </thead>
         <tbody>

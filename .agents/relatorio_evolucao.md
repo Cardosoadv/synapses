@@ -48,4 +48,14 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-09
+### Adicionado
+- **Micro-UX e Acessibilidade Avançada**:
+    - **Login**: Centralização de estilos da página de login no CSS global.
+    - **Feedback Visual**: Implementação da classe `.form-label-required` para indicação visual clara de campos obrigatórios via CSS.
+    - **Acessibilidade Web**: Adição de `role="alert"` em mensagens de feedback e `aria-current="page"` para navegação ativa no sidebar.
+    - **Tabelas Semânticas**: Implementação de `scope="col"` em todos os cabeçalhos de tabela para melhor suporte a leitores de tela.
+
+---
 *Assinado por: Antigravity AI*

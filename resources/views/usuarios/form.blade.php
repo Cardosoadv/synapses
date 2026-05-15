@@ -19,7 +19,7 @@
             <h3 class="card-title-small">Dados Pessoais</h3>
             
             <div class="form-group">
-                <label class="form-label">Nome Completo</label>
+                <label class="form-label form-label-required">Nome Completo</label>
                 <input type="text" name="name" class="form-control" value="{{ old('name', $usuario->name ?? '') }}" required>
             </div>
 
@@ -38,12 +38,12 @@
             <h3 class="card-title-small">Acesso e Perfil</h3>
 
             <div class="form-group">
-                <label class="form-label">E-mail Corporativo</label>
+                <label class="form-label form-label-required">E-mail Corporativo</label>
                 <input type="email" name="email" class="form-control" value="{{ old('email', $usuario->email ?? '') }}" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Perfil de Acesso</label>
+                <label class="form-label form-label-required">Perfil de Acesso</label>
                 <select name="role" class="form-control">
                     <option value="user" {{ old('role', $usuario->role ?? '') == 'user' ? 'selected' : '' }}>Colaborador (User)</option>
                     <option value="manager" {{ old('role', $usuario->role ?? '') == 'manager' ? 'selected' : '' }}>Gestor (Manager)</option>
@@ -52,12 +52,12 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">{{ isset($usuario) ? 'Nova Senha (deixe em branco para manter)' : 'Senha de Acesso' }}</label>
+                <label class="form-label {{ isset($usuario) ? '' : 'form-label-required' }}">{{ isset($usuario) ? 'Nova Senha (deixe em branco para manter)' : 'Senha de Acesso' }}</label>
                 <input type="password" name="password" class="form-control" {{ isset($usuario) ? '' : 'required' }}>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Confirmar Senha</label>
+                <label class="form-label {{ isset($usuario) ? '' : 'form-label-required' }}">Confirmar Senha</label>
                 <input type="password" name="password_confirmation" class="form-control" {{ isset($usuario) ? '' : 'required' }}>
             </div>
         </div>
