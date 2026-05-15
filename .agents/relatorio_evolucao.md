@@ -48,4 +48,16 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-15
+### Otimizações de Performance (Bolt)
+- **Correção de N+1**: Eager loading de usuários em movimentações na visualização de detalhes do processo.
+- **Consultas SARGable**: Otimização da busca do último número de processo para utilizar índices de data.
+- **Indexação de Banco de Dados**:
+    - Adição de índices em `processos` (status, data_abertura, created_at).
+    - Adição de índices em `tipos_processos` (is_active).
+    - Adição de índices em `users` (is_active).
+- **Manutenção**: Ajuste em teste unitário para refletir comportamento de redirecionamento da home.
+
+---
 *Assinado por: Antigravity AI*
