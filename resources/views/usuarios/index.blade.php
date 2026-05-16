@@ -39,7 +39,7 @@
                 <td>
                     <form action="{{ route('usuarios.toggle-status', $user->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="toggle-status-btn" aria-label="Alterar status de {{ $user->name }}" title="Clique para alternar o status" role="button">
+                        <button type="submit" class="toggle-status-btn" aria-label="Alternar status de {{ $user->name }}" title="Clique para alternar o status">
                             <span class="badge badge-{{ $user->is_active ? 'active' : 'inactive' }}">
                                 {{ $user->is_active ? 'Ativo' : 'Inativo' }}
                             </span>

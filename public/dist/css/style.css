@@ -1,4 +1,39 @@
 /* Core Layout & Components */
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top right, #1e293b, #0f172a);
+}
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+}
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.login-header h1 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+.login-header p {
+    color: var(--text-muted);
+}
+
+.sidebar-logo {
+    color: var(--primary);
+    margin-bottom: 2rem;
+}
+.sidebar-logo-span {
+    font-weight: 300;
+}
+.sidebar-nav-icon {
+    margin-right: 0.5rem;
+}
+
 .alert { padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
 .alert-success { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success); color: #4ade80; }
 .alert-error { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: #f87171; }
@@ -74,12 +109,18 @@
 
 /* Detail Views */
 .container-narrow { max-width: 900px; margin: 0 auto; }
+.container-medium { max-width: 800px; margin: 0 auto; }
 .container-wide { max-width: 1000px; margin: 0 auto; }
 .back-link { color: var(--text-muted); text-decoration: none; margin-bottom: 1rem; display: inline-block; }
 .detail-header { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; }
 .detail-header h1 { margin-top: 1rem; font-size: 2rem; color: var(--primary); }
 .detail-subtitle { font-size: 1.25rem; }
-.detail-actions { display: flex; gap: 1rem; }
+.detail-actions { display: flex; gap: 1rem; align-items: center; }
+
+.status-select {
+    width: auto;
+    background: var(--bg-card);
+}
 
 .grid-main { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
 .grid-2nd { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -108,7 +149,7 @@
     background: var(--success);
 }
 
-/* Accessibility */
+/* Accessibility & Form Feedback */
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
@@ -116,10 +157,34 @@
 
 .btn:focus-visible,
 .form-control:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
 a:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
+.form-label-required::after {
+    content: " *";
+    color: var(--danger);
+}
+
 /* Custom styles for components */
 .toggle-status-btn { background: none; border: none; padding: 0; cursor: pointer; }
+
+/* Utilities */
+.mb-2 { margin-bottom: 2rem; }
+.mt-1 { margin-top: 1rem; }
+.fs-md { font-size: 1.5rem; }
+.flex-end { display: flex; justify-content: flex-end; }
+.gap-1 { gap: 1rem; }
+.btn-block { width: 100%; }
+.fs-1 { font-size: 1rem; }
+.w-200 { width: 200px; }
+.w-150 { width: 150px; }
+.h-45 { height: 45px; }
+.p-1-5 { padding: 1.5rem; }
+.p-2 { padding: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.history-obs { font-size: 0.85rem; margin-top: 0.25rem; }
