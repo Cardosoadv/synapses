@@ -2,9 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Repositories\Contracts\DocumentoRepositoryInterface;
+use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
+use App\Repositories\Contracts\ProcessoRepositoryInterface;
+use App\Repositories\Contracts\TipoProcessoRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\DocumentoRepository;
+use App\Repositories\MovimentacaoRepository;
+use App\Repositories\ProcessoRepository;
+use App\Repositories\TipoProcessoRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -13,10 +21,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(\App\Repositories\Contracts\UserRepositoryInterface::class, \App\Repositories\UserRepository::class);
-        $this->app->bind(\App\Repositories\Contracts\TipoProcessoRepositoryInterface::class, \App\Repositories\TipoProcessoRepository::class);
-        $this->app->bind(\App\Repositories\Contracts\ProcessoRepositoryInterface::class, \App\Repositories\ProcessoRepository::class);
-        $this->app->bind(\App\Repositories\Contracts\MovimentacaoRepositoryInterface::class, \App\Repositories\MovimentacaoRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(TipoProcessoRepositoryInterface::class, TipoProcessoRepository::class);
+        $this->app->bind(ProcessoRepositoryInterface::class, ProcessoRepository::class);
+        $this->app->bind(DocumentoRepositoryInterface::class, DocumentoRepository::class);
+        $this->app->bind(MovimentacaoRepositoryInterface::class, MovimentacaoRepository::class);
     }
 
     /**

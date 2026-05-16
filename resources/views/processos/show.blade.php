@@ -23,9 +23,9 @@
                     <option value="arquivado" {{ $processo->status === 'arquivado' ? 'selected' : '' }}>Arquivado</option>
                 </select>
             </form>
-            <button class="btn btn-primary">
+            <a href="{{ route('documentos.create', $processo->id) }}" class="btn btn-primary">
                 <i class="bi bi-file-earmark-plus"></i> Adicionar Documento
-            </button>
+            </a>
         </div>
     </div>
 
