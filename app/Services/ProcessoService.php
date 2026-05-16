@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\BaseRepositoryInterface;
 use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -45,18 +47,23 @@ class ProcessoService
      */
     public function listAll(array $filters = [])
     {
-        return $this->repository->paginate(15, $filters);
+        return $this->repository->paginate(BaseRepositoryInterface::DEFAULT_PER_PAGE, $filters);
     }
 
     /**
      * Find a process by ID.
      *
      * @param int $id
-     * @return \App\Models\Processo|null
+     * @return \App\Models\Processo
+     * @throws ModelNotFoundException
      */
     public function findById(int $id)
     {
-        return $this->repository->findById($id);
+        $processo = $this->repository->findById($id);
+        if (!$processo) {
+            throw (new ModelNotFoundException())->setModel(\App\Models\Processo::class, [$id]);
+        }
+        return $processo;
     }
 
     /**
@@ -152,8 +159,17 @@ class ProcessoService
 
         $organ = '00001';
         $formattedSeq = str_pad($sequence, 6, '0', STR_PAD_LEFT);
-        $checkDigit = str_pad(rand(0, 99), 2, '0', STR_PAD_LEFT); // Simplified check digit
 
-        return "{$organ}.{$formattedSeq}/{$year}-{$checkDigit}";
+        // Calculate check digit using a simplified ISO 7064 Modulo 97-10
+        $numericBase = $organ . $formattedSeq . $year;
+        $remainder = 0;
+        foreach (str_split($numericBase) as $digit) {
+            $remainder = ($remainder * 10 + (int)$digit) % 97;
+        }
+        $remainder = ($remainder * 100) % 97;
+        $checkDigit = 98 - $remainder;
+        $formattedCheckDigit = str_pad($checkDigit, 2, '0', STR_PAD_LEFT);
+
+        return "{$organ}.{$formattedSeq}/{$year}-{$formattedCheckDigit}";
     }
 }
