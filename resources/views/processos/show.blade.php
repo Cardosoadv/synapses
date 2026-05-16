@@ -48,6 +48,37 @@
                     <div>{{ $processo->data_fechamento ? $processo->data_fechamento->format('d/m/Y H:i') : '-' }}</div>
                 </div>
             </div>
+
+            <h3 class="card-title" style="margin-top: 2rem;">Documentos</h3>
+            <div class="documentos-list">
+                @forelse($documentos as $documento)
+                    <div class="documento-item glass" style="padding: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>{{ $documento->titulo }}</strong>
+                            <div class="text-muted" style="font-size: 0.85rem;">
+                                Nível de Acesso: {{ ucfirst($documento->nivel_acesso) }} | Data: {{ $documento->created_at->format('d/m/Y H:i') }}
+                            </div>
+                        </div>
+                        <div class="documento-actions">
+                            <a href="{{ route('documentos.view', $documento->uuid) }}" target="_blank" class="btn btn-sm btn-outline-primary" title="Visualizar">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ route('documentos.download', $documento->uuid) }}" class="btn btn-sm btn-outline-secondary" title="Baixar">
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <form action="{{ route('documentos.destroy', $documento->uuid) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir este documento?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-muted">Nenhum documento anexado a este processo.</p>
+                @endforelse
+            </div>
         </div>
 
         <div class="sidebar-stack">

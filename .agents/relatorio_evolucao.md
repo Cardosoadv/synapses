@@ -76,4 +76,11 @@
     - `RepositoryServiceProvider` consolidado com todos os bindings: User, TipoProcesso, Processo, Movimentacao, Documento.
 
 ---
+## [v1.2.1] - 2026-05-16
+### Corrigido
+- **Módulo de Processos e Documentos**:
+    - Correção na exibição de documentos na tela de detalhes do processo (`show.blade.php`).
+    - Integração do `MovimentacaoRepositoryInterface` ao `DocumentoService` para garantir que o envio de um documento registre corretamente uma movimentação na timeline do processo.
+
+---
 *Assinado por: Antigravity AI*

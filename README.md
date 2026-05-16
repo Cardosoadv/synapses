@@ -1,9 +1,9 @@
 <p align="center">
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/version-v1.2.0-blue.svg" alt="Latest Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/version-v1.2.1-blue.svg" alt="Latest Version"></a>
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 </p>
 
-## Synapses GED v1.2.0
+## Synapses GED v1.2.1
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 

@@ -75,7 +75,7 @@ class DocumentoController extends Controller
             return back()->with('error', 'O arquivo físico não foi encontrado no servidor.');
         }
 
-        return response()->file(storage_path('app/' . $documento->arquivo_path), [
+        return response()->file(Storage::disk('local')->path($documento->arquivo_path), [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $documento->titulo . '.pdf"'
         ]);

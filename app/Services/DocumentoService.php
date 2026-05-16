@@ -3,16 +3,21 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\DocumentoRepositoryInterface;
+use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DocumentoService
 {
     protected $repository;
+    protected $movimentacaoRepository;
 
-    public function __construct(DocumentoRepositoryInterface $repository)
-    {
+    public function __construct(
+        DocumentoRepositoryInterface $repository,
+        MovimentacaoRepositoryInterface $movimentacaoRepository
+    ) {
         $this->repository = $repository;
+        $this->movimentacaoRepository = $movimentacaoRepository;
     }
 
     public function listByProcesso(int $processoId)
@@ -41,7 +46,17 @@ class DocumentoService
         $data['numero_documento'] = $this->generateDocumentNumber();
         $data['status'] = $data['status'] ?? 'rascunho';
         
-        return $this->repository->create($data);
+        $documento = $this->repository->create($data);
+
+        $this->movimentacaoRepository->create([
+            'processo_id' => $data['processo_id'],
+            'user_id' => $data['user_id'] ?? auth()->id(),
+            'status_anterior' => null,
+            'status_novo' => 'documento_adicionado',
+            'observacao' => 'Documento "' . ($data['titulo'] ?? 'Sem título') . '" adicionado.'
+        ]);
+
+        return $documento;
     }
 
     public function update(int $id, array $data, $file = null)
