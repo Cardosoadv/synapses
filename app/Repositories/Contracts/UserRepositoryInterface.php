@@ -3,23 +3,26 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-interface UserRepositoryInterface
+/**
+ * Interface UserRepositoryInterface
+ * @package App\Repositories\Contracts
+ */
+interface UserRepositoryInterface extends BaseRepositoryInterface
 {
-    public function findAll(array $filters = []): \Illuminate\Database\Eloquent\Collection;
-    
-    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator;
-    
-    public function findById(int $id): ?User;
-    
+    /**
+     * Find a user by email.
+     *
+     * @param string $email
+     * @return User|null
+     */
     public function findByEmail(string $email): ?User;
-    
-    public function create(array $data): User;
-    
-    public function update(int $id, array $data): User;
-    
-    public function delete(int $id): bool;
-    
+
+    /**
+     * Toggle the active status of a user.
+     *
+     * @param int $id
+     * @return bool
+     */
     public function toggleStatus(int $id): bool;
 }

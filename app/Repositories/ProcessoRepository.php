@@ -4,51 +4,34 @@ namespace App\Repositories;
 
 use App\Models\Processo;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
-class ProcessoRepository implements ProcessoRepositoryInterface
+/**
+ * Class ProcessoRepository
+ * @package App\Repositories
+ */
+class ProcessoRepository extends BaseRepository implements ProcessoRepositoryInterface
 {
-    protected $model;
-
+    /**
+     * ProcessoRepository constructor.
+     * @param Processo $model
+     */
     public function __construct(Processo $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
     }
 
-    public function findAll(array $filters = []): Collection
-    {
-        return $this->applyFilters($this->model->query(), $filters)->get();
-    }
-
-    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator
-    {
-        return $this->applyFilters($this->model->query(), $filters)->paginate($perPage);
-    }
-
-    public function findById(int $id): ?Processo
+    /**
+     * @inheritDoc
+     */
+    public function findById(int $id): ?Model
     {
         return $this->model->with(['tipoProcesso', 'interessado'])->find($id);
     }
 
-    public function create(array $data): Processo
-    {
-        return $this->model->create($data);
-    }
-
-    public function update(int $id, array $data): Processo
-    {
-        $processo = $this->model->findOrFail($id);
-        $processo->update($data);
-        return $processo;
-    }
-
-    public function delete(int $id): bool
-    {
-        $processo = $this->model->findOrFail($id);
-        return $processo->delete();
-    }
-
+    /**
+     * @inheritDoc
+     */
     public function getLatestProcessNumber(int $year): ?string
     {
         $latest = $this->model->whereYear('data_abertura', $year)
@@ -58,6 +41,9 @@ class ProcessoRepository implements ProcessoRepositoryInterface
         return $latest ? $latest->numero : null;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function applyFilters($query, array $filters)
     {
         $query->with(['tipoProcesso', 'interessado']);
