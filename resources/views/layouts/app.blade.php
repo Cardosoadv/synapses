@@ -11,23 +11,23 @@
 <body>
     @auth
     <div class="sidebar">
-        <h2>Synapses <span style="font-weight: 300;">GED</span></h2>
+        <h2>Synapses <span class="fw-300">GED</span></h2>
         
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
-                <i class="bi bi-people" style="margin-right: 0.5rem;"></i> Usuários
+            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}" {!! request()->routeIs('usuarios.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-people me-0-5"></i> Usuários
             </a>
             
-            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}">
-                <i class="bi bi-folder" style="margin-right: 0.5rem;"></i> Processos
+            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}" {!! request()->routeIs('processos.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-folder me-0-5"></i> Processos
             </a>
 
-            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}">
-                <i class="bi bi-tags" style="margin-right: 0.5rem;"></i> Tipos de Processos
+            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}" {!! request()->routeIs('tipos-processos.*') ? 'aria-current="page"' : '' !!}>
+                <i class="bi bi-tags me-0-5"></i> Tipos de Processos
             </a>
 
             <a href="#">
-                <i class="bi bi-file-earmark-text" style="margin-right: 0.5rem;"></i> Documentos
+                <i class="bi bi-file-earmark-text me-0-5"></i> Documentos
             </a>
         </nav>
 
