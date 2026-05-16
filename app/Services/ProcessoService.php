@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Processo;
+use App\Models\User;
 use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -45,18 +48,23 @@ class ProcessoService
      */
     public function listAll(array $filters = [])
     {
-        return $this->repository->paginate(15, $filters);
+        return $this->repository->paginate($this->repository::DEFAULT_PER_PAGE, $filters);
     }
 
     /**
      * Find a process by ID.
      *
      * @param int $id
-     * @return \App\Models\Processo|null
+     * @return \App\Models\Processo
+     * @throws ModelNotFoundException
      */
     public function findById(int $id)
     {
-        return $this->repository->findById($id);
+        $processo = $this->repository->findById($id);
+        if (!$processo) {
+            throw (new ModelNotFoundException())->setModel(Processo::class, [$id]);
+        }
+        return $processo;
     }
 
     /**
@@ -76,7 +84,7 @@ class ProcessoService
 
             $this->movimentacaoRepository->create([
                 'processo_id' => $processo->id,
-                'user_id' => Auth::id(),
+                'user_id' => Auth::id() ?? $this->getSystemUserId(),
                 'status_anterior' => null,
                 'status_novo' => 'aberto',
                 'observacao' => 'Abertura do processo.'
@@ -108,7 +116,7 @@ class ProcessoService
             if (isset($data['status']) && $data['status'] !== $oldStatus) {
                 $this->movimentacaoRepository->create([
                     'processo_id' => $id,
-                    'user_id' => Auth::id(),
+                    'user_id' => Auth::id() ?? $this->getSystemUserId(),
                     'status_anterior' => $oldStatus,
                     'status_novo' => $data['status'],
                     'observacao' => 'Alteração de status do processo.'
@@ -128,6 +136,17 @@ class ProcessoService
     public function delete(int $id)
     {
         return $this->repository->delete($id);
+    }
+
+    /**
+     * Get the system user ID for recording movements when Auth::id() is unavailable.
+     *
+     * @return int|null
+     */
+    protected function getSystemUserId()
+    {
+        $systemUser = User::where('role', 'admin')->where('is_active', true)->first();
+        return $systemUser ? $systemUser->id : null;
     }
 
     /**

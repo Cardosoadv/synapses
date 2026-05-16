@@ -26,7 +26,7 @@ class ProcessoRepository extends BaseRepository implements ProcessoRepositoryInt
      */
     public function findById(int $id): ?Model
     {
-        return $this->model->with(['tipoProcesso', 'interessado'])->find($id);
+        return $this->model->with(['tipoProcesso', 'interessado', 'movimentacoes.user'])->find($id);
     }
 
     /**
