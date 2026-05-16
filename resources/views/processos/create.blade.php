@@ -18,7 +18,7 @@
             
             <div class="grid-2nd form-group">
                 <div>
-                    <label class="form-label">Tipo de Processo *</label>
+                    <label class="form-label form-label-required">Tipo de Processo</label>
                     <select name="tipo_processo_id" class="form-control" required>
                         <option value="">Selecione o tipo...</option>
                         @foreach($tipos as $tipo)
@@ -38,12 +38,12 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Assunto *</label>
+                <label class="form-label form-label-required">Assunto</label>
                 <input type="text" name="assunto" class="form-control" value="{{ old('assunto') }}" required placeholder="Título ou resumo do processo">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Nível de Acesso *</label>
+                <label class="form-label form-label-required">Nível de Acesso</label>
                 <div class="radio-group">
                     <label class="radio-label">
                         <input type="radio" name="nivel_acesso" value="publico" {{ old('nivel_acesso', 'publico') === 'publico' ? 'checked' : '' }}>
