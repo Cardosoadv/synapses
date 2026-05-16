@@ -22,7 +22,7 @@
             </div>
             <div>
                 <label class="form-label">Tipo</label>
-                <select name="tipo_processo_id" class="form-control" style="width: 200px;">
+                <select name="tipo_processo_id" class="form-control w-200">
                     <option value="">Todos os Tipos</option>
                     @foreach($tipos as $tipo)
                     <option value="{{ $tipo->id }}" {{ request('tipo_processo_id') == $tipo->id ? 'selected' : '' }}>{{ $tipo->nome }}</option>
@@ -31,7 +31,7 @@
             </div>
             <div>
                 <label class="form-label">Status</label>
-                <select name="status" class="form-control" style="width: 150px;">
+                <select name="status" class="form-control w-150">
                     <option value="">Todos</option>
                     <option value="aberto" {{ request('status') == 'aberto' ? 'selected' : '' }}>Aberto</option>
                     <option value="em_analise" {{ request('status') == 'em_analise' ? 'selected' : '' }}>Em Análise</option>
@@ -39,7 +39,7 @@
                     <option value="arquivado" {{ request('status') == 'arquivado' ? 'selected' : '' }}>Arquivado</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-outline" style="height: 45px;">
+            <button type="submit" class="btn btn-outline h-45" title="Pesquisar" aria-label="Pesquisar processos">
                 <i class="bi bi-search"></i>
             </button>
         </form>

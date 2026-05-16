@@ -48,4 +48,16 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-09
+### Adicionado
+- **Sistema de Classes Utilitárias**: Implementação de um micro-framework de utilitários CSS (dimensões, espaçamento, tipografia) para padronização da UI.
+- **Identificação Visual de Campos Obrigatórios**: Criação da classe `.form-label-required` que adiciona automaticamente um asterisco vermelho via pseudo-elemento CSS.
+- **Aprimoramento de Acessibilidade**:
+    - Implementação de `role="alert"` em mensagens de feedback do sistema.
+    - Uso de `aria-current="page"` para identificação semântica do item ativo no menu de navegação.
+    - Remoção de redundâncias de `role="button"` em elementos HTML semânticos.
+- **Refatoração Completa de Views**: Extração final de estilos inline remanescentes nas views de Login, Processos e Usuários, reduzindo o acoplamento visual e facilitando o cache de assets.
+
+---
 *Assinado por: Antigravity AI*

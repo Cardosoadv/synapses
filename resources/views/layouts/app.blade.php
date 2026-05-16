@@ -11,18 +11,18 @@
 <body>
     @auth
     <div class="sidebar">
-        <h2>Synapses <span style="font-weight: 300;">GED</span></h2>
+        <h2>Synapses <span class="fw-300">GED</span></h2>
         
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
+            <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}" aria-current="{{ request()->routeIs('usuarios.*') ? 'page' : 'false' }}">
                 <i class="bi bi-people" style="margin-right: 0.5rem;"></i> Usuários
             </a>
             
-            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}">
+            <a href="{{ route('processos.index') }}" class="{{ request()->routeIs('processos.*') ? 'active' : '' }}" aria-current="{{ request()->routeIs('processos.*') ? 'page' : 'false' }}">
                 <i class="bi bi-folder" style="margin-right: 0.5rem;"></i> Processos
             </a>
 
-            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}">
+            <a href="{{ route('tipos-processos.index') }}" class="{{ request()->routeIs('tipos-processos.*') ? 'active' : '' }}" aria-current="{{ request()->routeIs('tipos-processos.*') ? 'page' : 'false' }}">
                 <i class="bi bi-tags" style="margin-right: 0.5rem;"></i> Tipos de Processos
             </a>
 
@@ -53,11 +53,11 @@
 
     <div class="@auth main-content @endauth">
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
 
         @if($errors->any())
-            <div class="alert alert-error">
+            <div class="alert alert-error" role="alert">
                 <ul>
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>

@@ -39,14 +39,14 @@
                 <td>
                     <form action="{{ route('usuarios.toggle-status', $user->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="toggle-status-btn" aria-label="Alterar status de {{ $user->name }}" title="Clique para alternar o status" role="button">
+                        <button type="submit" class="toggle-status-btn" aria-label="Alterar status de {{ $user->name }}" title="Clique para alternar o status">
                             <span class="badge badge-{{ $user->is_active ? 'active' : 'inactive' }}">
                                 {{ $user->is_active ? 'Ativo' : 'Inativo' }}
                             </span>
                         </button>
                     </form>
                 </td>
-                <td class="td-sub" style="font-size: 0.875rem;">
+                <td class="td-sub fs-0-875">
                     {{ $user->last_login_at ? $user->last_login_at->format('d/m/Y H:i') : 'Nunca logou' }}
                 </td>
                 <td class="text-right">
