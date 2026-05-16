@@ -56,4 +56,13 @@
     - **Visualizador de Processo (Folheador)**: Nova tela com barra lateral que permite "folhear" todos os documentos de um processo de forma fluida.
 
 ---
+
+## [Manutenção] - 2026-05-16
+### Resolvido
+- **Conflitos de Merge (14 PRs)**: Todos os pull requests dos agentes (Bolt, Code Health, Davinci, Palette, Sentinel) tiveram seus conflitos de merge resolvidos manualmente.
+    - Estratégia: mesclar as contribuições de UI (Palette), performance (Bolt), segurança (Sentinel) e features (Davinci) com o código base da branch `main`, que incluía o novo módulo de Documentos (v1.2.0).
+    - Todas as branches foram atualizadas com `git push origin` após a resolução.
+    - `RepositoryServiceProvider` consolidado com todos os bindings: User, TipoProcesso, Processo, Movimentacao, Documento.
+
+---
 *Assinado por: Antigravity AI*
