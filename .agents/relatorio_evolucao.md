@@ -40,23 +40,28 @@
 
 ## [v1.2.0] - 2026-05-09
 ### Adicionado
-- **Centralização de Recursos**: Implementação de `public/dist/css/style.css` e módulos JS em `public/dist/js/app/`.
-- **Acessibilidade (A11y)**:
-    - Suporte a navegação por teclado com `:focus-visible`.
-    - Labels de acessibilidade (`aria-label`) em todos os elementos de ação.
-    - Suporte a eventos de teclado para elementos não-semânticos.
-- **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
+- **Módulo de Documentos (Fase 1 - PDF)**:
+    - Implementação do CRUD de documentos vinculados a processos.
+    - Suporte a upload de arquivos PDF com armazenamento local seguro (`storage/app/documentos`).
+    - Visualização de PDFs diretamente no navegador e opção de download.
+    - Geração de numeração de documentos (`DOC-NNNNNNNN`).
+    - Identificação opaca e segura usando **UUIDs** gerados automaticamente no banco de dados.
+    - Controle de nível de acesso por documento (Público, Restrito, Sigiloso).
+- **Centralização de Recursos & Acessibilidade**:
+    - Implementação de `public/dist/css/style.css` e módulos JS em `public/dist/js/app/`.
+    - Suporte a navegação por teclado com `:focus-visible` e labels `aria-label`.
+    - Refatoração de UI: Substituição de estilos inline por classes semânticas centralizadas.
+- **Camada MVCRS Expandida**:
+    - Repositórios e Serviços para `Documento` e `Movimentacao`.
+    - Suporte a `findByUuid` e lógica de geração de numeração.
 
 ---
 
 ## [v1.3.0] - 2026-05-15
-### Otimizações de Performance (Bolt)
+### Otimizado (Bolt)
 - **Correção de N+1**: Eager loading de usuários em movimentações na visualização de detalhes do processo.
 - **Consultas SARGable**: Otimização da busca do último número de processo para utilizar índices de data.
-- **Indexação de Banco de Dados**:
-    - Adição de índices em `processos` (status, data_abertura, created_at).
-    - Adição de índices em `tipos_processos` (is_active).
-    - Adição de índices em `users` (is_active).
+- **Indexação de Banco de Dados**: Adição de índices em `processos`, `tipos_processos` e `users`.
 - **Manutenção**: Ajuste em teste unitário para refletir comportamento de redirecionamento da home.
 
 ---
