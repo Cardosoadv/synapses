@@ -21,9 +21,13 @@ class TipoProcessoRepository extends BaseRepository implements TipoProcessoRepos
     }
 
     /**
-     * @inheritDoc
+     * Apply filters to the query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function applyFilters($query, array $filters)
+    protected function applyFilters($query, array $filters): \Illuminate\Database\Eloquent\Builder
     {
         if (isset($filters['search']) && !empty($filters['search'])) {
             $search = $filters['search'];

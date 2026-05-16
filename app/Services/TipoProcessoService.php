@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\TipoProcesso;
 use App\Repositories\Contracts\TipoProcessoRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -31,7 +33,7 @@ class TipoProcessoService
      * @param array $filters
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function listAll(array $filters = [])
+    public function listAll(array $filters = []): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->repository->paginate(15, $filters);
     }
@@ -41,7 +43,7 @@ class TipoProcessoService
      *
      * @return Collection
      */
-    public function getAllActive()
+    public function getAllActive(): Collection
     {
         return $this->repository->findAll(['is_active' => true]);
     }
@@ -50,20 +52,27 @@ class TipoProcessoService
      * Find a process type by ID.
      *
      * @param int $id
-     * @return \App\Models\TipoProcesso|null
+     * @return \App\Models\TipoProcesso
+     * @throws ModelNotFoundException
      */
-    public function findById(int $id)
+    public function findById(int $id): TipoProcesso
     {
-        return $this->repository->findById($id);
+        $tipoProcesso = $this->repository->findById($id);
+
+        if (!$tipoProcesso) {
+            throw (new ModelNotFoundException())->setModel(TipoProcesso::class, [$id]);
+        }
+
+        return $tipoProcesso;
     }
 
     /**
      * Create a new process type.
      *
      * @param array $data
-     * @return \App\Models\TipoProcesso
+     * @return TipoProcesso
      */
-    public function create(array $data)
+    public function create(array $data): TipoProcesso
     {
         return $this->repository->create($data);
     }
@@ -73,9 +82,9 @@ class TipoProcessoService
      *
      * @param int $id
      * @param array $data
-     * @return \App\Models\TipoProcesso
+     * @return TipoProcesso
      */
-    public function update(int $id, array $data)
+    public function update(int $id, array $data): TipoProcesso
     {
         return $this->repository->update($id, $data);
     }
@@ -86,7 +95,7 @@ class TipoProcessoService
      * @param int $id
      * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         return $this->repository->delete($id);
     }

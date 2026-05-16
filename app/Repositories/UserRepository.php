@@ -21,7 +21,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * Find a user by email.
+     *
+     * @param string $email
+     * @return User|null
      */
     public function findByEmail(string $email): ?User
     {
@@ -29,7 +32,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * Toggle the active status of a user.
+     *
+     * @param int $id
+     * @return bool
      */
     public function toggleStatus(int $id): bool
     {
@@ -39,9 +45,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * Apply filters to the query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function applyFilters($query, array $filters)
+    protected function applyFilters($query, array $filters): \Illuminate\Database\Eloquent\Builder
     {
         if (isset($filters['search']) && !empty($filters['search'])) {
             $search = $filters['search'];
