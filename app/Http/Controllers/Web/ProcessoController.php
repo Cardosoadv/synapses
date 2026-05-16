@@ -91,7 +91,10 @@ class ProcessoController extends Controller
     public function show($id)
     {
         $processo = $this->service->findById($id);
-        return view('processos.show', compact('processo'));
+        $documentosService = app(\App\Services\DocumentoService::class);
+        $documentos = $documentosService->listByProcesso($id);
+        
+        return view('processos.show', compact('processo', 'documentos'));
     }
 
     /**

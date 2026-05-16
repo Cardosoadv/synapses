@@ -1,12 +1,11 @@
 <p align="center">
-<a href="#"><img src="https://img.shields.io/badge/version-v1.1.0--alpha-orange.svg" alt="Version"></a>
-<a href="#"><img src="https://img.shields.io/badge/status-em%20desenvolvimento-yellow.svg" alt="Status"></a>
+<a href="#"><img src="https://img.shields.io/badge/version-v1.3.0-blue.svg" alt="Version"></a>
+<a href="#"><img src="https://img.shields.io/badge/status-active-brightgreen.svg" alt="Status"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
 </p>
 
-<p align="center">
-  <strong>⚠️ Este projeto está em fase inicial de desenvolvimento. APIs, estrutura e funcionalidades estão sujeitas a mudanças significativas. Não recomendado para uso em produção.</strong>
-</p>
+## Synapses GED v1.3.0
+
 
 ---
 
