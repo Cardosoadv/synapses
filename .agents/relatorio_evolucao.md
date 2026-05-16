@@ -37,4 +37,23 @@
     - Integração no sidebar principal.
 
 ---
+
+## [v1.2.0] - 2026-05-09
+### Adicionado
+- **Módulo de Documentos (Fase 1 - PDF)**:
+    - Implementação do CRUD de documentos vinculados a processos.
+    - Suporte a upload de arquivos PDF com armazenamento local seguro (`storage/app/documentos`).
+    - Visualização de PDFs diretamente no navegador e opção de download.
+    - Geração de numeração de documentos (`DOC-NNNNNNNN`).
+    - Identificação opaca e segura usando **UUIDs** gerados automaticamente no banco de dados.
+    - Controle de nível de acesso por documento (Público, Restrito, Sigiloso).
+- **Camada MVCRS Expandida**:
+    - `DocumentoRepository` e `DocumentoService` para gestão de arquivos e metadados com suporte a `findByUuid`.
+    - Controller Web para integração com a interface de processos.
+- **Interface**:
+    - Tela de upload premium com suporte a drag-and-drop (visual).
+    - Listagem de documentos integrada à tela de detalhes do processo.
+    - **Visualizador de Processo (Folheador)**: Nova tela com barra lateral que permite "folhear" todos os documentos de um processo de forma fluida.
+
+---
 *Assinado por: Antigravity AI*

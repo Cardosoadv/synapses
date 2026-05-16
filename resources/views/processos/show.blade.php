@@ -23,30 +23,89 @@
                     <option value="arquivado" {{ $processo->status === 'arquivado' ? 'selected' : '' }}>Arquivado</option>
                 </select>
             </form>
-            <button class="btn btn-primary">
+            <a href="{{ route('documentos.create', $processo->id) }}" class="btn btn-primary">
                 <i class="bi bi-file-earmark-plus"></i> Adicionar Documento
-            </button>
+            </a>
         </div>
     </div>
 
     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-        <div class="glass" style="padding: 2rem;">
-            <h3 style="margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">Informações Gerais</h3>
-            
-            <div style="margin-bottom: 2rem;">
-                <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Descrição</label>
-                <div style="line-height: 1.6;">{{ $processo->descricao ?? 'Sem descrição detalhada.' }}</div>
+        <div>
+            <div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+                <h3 style="margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">Informações Gerais</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Descrição</label>
+                    <div style="line-height: 1.6;">{{ $processo->descricao ?? 'Sem descrição detalhada.' }}</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Data de Abertura</label>
+                        <div>{{ $processo->data_abertura->format('d/m/Y H:i') }}</div>
+                    </div>
+                    <div>
+                        <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Data de Fechamento</label>
+                        <div>{{ $processo->data_fechamento ? $processo->data_fechamento->format('d/m/Y H:i') : '-' }}</div>
+                    </div>
+                </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div>
-                    <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Data de Abertura</label>
-                    <div>{{ $processo->data_abertura->format('d/m/Y H:i') }}</div>
-                </div>
-                <div>
-                    <label style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">Data de Fechamento</label>
-                    <div>{{ $processo->data_fechamento ? $processo->data_fechamento->format('d/m/Y H:i') : '-' }}</div>
-                </div>
+            <div class="glass" style="padding: 2rem;">
+                <h3 style="margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">Documentos</h3>
+                
+                @if($documentos->isEmpty())
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <i class="bi bi-file-earmark" style="font-size: 2rem; display: block; margin-bottom: 1rem;"></i>
+                        Nenhum documento incluído neste processo.
+                    </div>
+                @else
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Título</th>
+                                <th>Tipo</th>
+                                <th>Usuário</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($documentos as $doc)
+                                <tr>
+                                    <td style="font-family: monospace;">{{ $doc->numero_documento }}</td>
+                                    <td>{{ $doc->titulo }}</td>
+                                    <td>
+                                        <span style="padding: 0.25rem 0.5rem; background: rgba(255,255,255,0.1); border-radius: 0.25rem; font-size: 0.75rem; text-transform: uppercase;">
+                                            {{ $doc->tipo_documento }}
+                                        </span>
+                                    </td>
+                                    <td style="font-size: 0.875rem;">{{ $doc->user->name }}</td>
+                                    <td>
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <a href="{{ route('documentos.viewer', $doc->uuid) }}" class="btn btn-icon" title="Visualizar/Folhear">
+                                                <i class="bi bi-book"></i>
+                                            </a>
+                                            <a href="{{ route('documentos.view', $doc->uuid) }}" target="_blank" class="btn btn-icon" title="Visualizar PDF">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{{ route('documentos.download', $doc->uuid) }}" class="btn btn-icon" title="Download">
+                                                <i class="bi bi-download"></i>
+                                            </a>
+                                            <form action="{{ route('documentos.destroy', $doc->uuid) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este documento?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-icon btn-danger" title="Excluir">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         </div>
 
