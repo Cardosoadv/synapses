@@ -1,91 +1,54 @@
 <p align="center">
-<a href="#"><img src="https://img.shields.io/badge/version-v1.1.0--alpha-orange.svg" alt="Version"></a>
-<a href="#"><img src="https://img.shields.io/badge/status-em%20desenvolvimento-yellow.svg" alt="Status"></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/version-v1.3.0-blue.svg" alt="Latest Version"></a>
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 </p>
 
-<p align="center">
-  <strong>⚠️ Este projeto está em fase inicial de desenvolvimento. APIs, estrutura e funcionalidades estão sujeitas a mudanças significativas. Não recomendado para uso em produção.</strong>
-</p>
+## Synapses GED v1.3.0
 
----
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-# Synapses GED — Sistema de Gestão para Conselhos Profissionais
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-**Synapses GED** é um software de código aberto desenvolvido para atender às necessidades específicas dos conselhos profissionais brasileiros, cobrindo tanto as **atividades finalísticas** (registro, fiscalização, processos ético-disciplinares) quanto as **atividades meio** (gestão administrativa, financeira e de pessoas).
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-O projeto nasce da necessidade de oferecer às entidades de fiscalização do exercício profissional uma solução moderna, transparente e acessível, alinhada aos princípios da administração pública e às exigências dos órgãos de controle.
+## Learning Laravel
 
----
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## 🎯 Escopo do Sistema
+In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-### Atividades Finalísticas
+You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
 
-Módulos voltados ao propósito institucional dos conselhos:
+## Agentic Development
 
-- **Registro Profissional** — Cadastro, habilitação e emissão de carteiras e certidões para pessoas físicas e jurídicas.
-- **Fiscalização** — Planejamento e controle de ações fiscais, visitas e autuações.
-- **Processos Ético-Disciplinares** — Gestão de denúncias, sindicâncias e processos administrativos disciplinares.
-- **Câmaras e Plenário** — Suporte à tramitação de pautas, deliberações e atas de reuniões.
-- **Atendimento ao Profissional** — Portal de serviços, requerimentos online e acompanhamento de solicitações.
+Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
-### Atividades Meio
+```bash
+composer require laravel/boost --dev
 
-Módulos de suporte à gestão interna:
+php artisan boost:install
+```
 
-- **Financeiro e Orçamentário** — Controle de arrecadação, anuidades, despesas e prestação de contas.
-- **Gestão Documental (GED)** — Organização, armazenamento e rastreabilidade de documentos institucionais.
-- **Gestão de Pessoas** — Controle de servidores, cargos, folha de ponto e férias.
-- **Compras e Contratos** — Processos licitatórios, controle de contratos e fornecedores.
-- **Protocolo e Expediente** — Recebimento, distribuição e tramitação de documentos e processos internos.
+Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
----
+## Contributing
 
-## 🚧 Estado do Projeto
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-O Synapses GED está em **fase inicial de desenvolvimento (alpha)**. As funcionalidades listadas representam o escopo pretendido, e não necessariamente o que já está implementado. As contribuições são muito bem-vindas.
+## Code of Conduct
 
-Roadmap de curto prazo:
-- [ ] Módulo de Registro Profissional — MVP
-- [ ] Autenticação e controle de acesso por perfis
-- [ ] Portal do profissional (autoatendimento)
-- [ ] Módulo financeiro básico (arrecadação de anuidades)
-- [ ] GED — indexação e versionamento de documentos
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
----
+## Security Vulnerabilities
 
-## 🛠️ Tecnologia
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-O sistema é construído sobre o **Laravel**, framework PHP com sintaxe expressiva e ecossistema robusto, que oferece:
+## License
 
-- Motor de roteamento simples e eficiente.
-- Injeção de dependência e arquitetura orientada a serviços.
-- ORM Eloquent para modelagem e consulta ao banco de dados.
-- Migrações para controle de esquema do banco de dados.
-- Filas para processamento assíncrono de tarefas.
-- Suporte a transmissão de eventos em tempo real.
-
----
-
-## 🤝 Contribuindo
-
-Este é um projeto de código aberto e contribuições são essenciais para o seu crescimento. Se você é desenvolvedor, designer, especialista em conselhos profissionais ou gestor público, sua participação faz diferença.
-
-- Abra uma *issue* para relatar problemas ou sugerir funcionalidades.
-- Envie um *pull request* com melhorias ou correções.
-- Compartilhe o projeto com outros conselhos e profissionais da área.
-
-Por favor, leia o guia de contribuição antes de submeter alterações (em elaboração).
-
----
-
-## 🔒 Vulnerabilidades de Segurança
-
-Se você descobrir uma vulnerabilidade de segurança, por favor **não abra uma issue pública**. Entre em contato diretamente com a equipe mantenedora por e-mail para que o problema seja tratado de forma responsável.
-
----
-
-## 📄 Licença
-
-Este software é distribuído sob a licença [MIT](https://opensource.org/licenses/MIT), garantindo liberdade de uso, modificação e distribuição, inclusive para fins institucionais e governamentais.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

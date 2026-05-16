@@ -1,55 +1,59 @@
-# Relatório de Evolução - Synapses GED
+# Relat├│rio de Evolu├º├úo - Synapses GED
 
 ## [v1.0.0] - 2026-05-09
 ### Adicionado
-- **Módulo de Gestão de Usuários**: Implementação completa do CRUD de usuários seguindo o padrão MVCRS.
-- **Autenticação Dupla**: 
-  - **API (JWT)**: Implementação de login stateless via `tymon/jwt-auth` para integrações e apps.
-  - **Web (Session)**: Login tradicional via sessões para a interface administrativa.
+- **M├│dulo de Gest├úo de Usu├írios**: Implementa├º├úo completa do CRUD de usu├írios seguindo o padr├úo MVCRS.
+- **Autentica├º├úo Dupla**: 
+  - **API (JWT)**: Implementa├º├úo de login stateless via `tymon/jwt-auth` para integra├º├Áes e apps.
+  - **Web (Session)**: Login tradicional via sess├Áes para a interface administrativa.
 - **Design System Premium**: Interface Dark Mode com CSS customizado, glassmorphism e componentes interativos (sidebar, datatables).
 - **Camada MVCRS**:
   - **Models**: `User` expandido com campos GED (`cpf`, `role`, `status`, `avatar`) e suporte JWT.
-  - **Validation**: Form Requests dedicados para cada ação de usuário e auth.
+  - **Validation**: Form Requests dedicados para cada a├º├úo de usu├írio e auth.
   - **Controllers**: Separados por contexto (Web e API).
-  - **Repositories**: Padronização do acesso a dados via `UserRepositoryInterface`.
-  - **Services**: Centralização da lógica de negócio em `UserService` e `AuthService`.
-- **Segurança**: Middleware JWT para proteção de rotas API e controle de status de conta (ativa/inativa).
+  - **Repositories**: Padroniza├º├úo do acesso a dados via `UserRepositoryInterface`.
+  - **Services**: Centraliza├º├úo da l├│gica de neg├│cio em `UserService` e `AuthService`.
+- **Seguran├ºa**: Middleware JWT para prote├º├úo de rotas API e controle de status de conta (ativa/inativa).
 
 ### Alterado
 - **Migration**: Tabela `users` expandida com novos campos de perfil e auditoria.
-- **Bootstrap**: Configuração de rotas API e injeção de dependência via `RepositoryServiceProvider`.
+- **Bootstrap**: Configura├º├úo de rotas API e inje├º├úo de depend├¬ncia via `RepositoryServiceProvider`.
 
 ---
 
 ## [v1.1.0] - 2026-05-09
 ### Adicionado
-- **Módulo de Processos (Inspirado no SEI)**:
-    - Registro de processos com numeração automática sequencial (`NNNNN.NNNNNN/YYYY-DD`).
-    - Gestão de Tipos de Processos (categorias, prefixos e prazos).
-    - Controle de níveis de acesso (Público, Restrito, Sigiloso).
-    - Timeline básica de eventos do processo.
+- **M├│dulo de Processos (Inspirado no SEI)**:
+    - Registro de processos com numera├º├úo autom├ítica sequencial (`NNNNN.NNNNNN/YYYY-DD`).
+    - Gest├úo de Tipos de Processos (categorias, prefixos e prazos).
+    - Controle de n├¡veis de acesso (P├║blico, Restrito, Sigiloso).
+    - Timeline b├ísica de eventos do processo.
 - **Camada MVCRS Expandida**:
-    - Novos Repositórios e Contratos para `Processo` e `TipoProcesso`.
-    - Serviços com lógica de negócio centralizada e geração de numeração.
-    - Controllers Web para gestão administrativa.
+    - Novos Reposit├│rios e Contratos para `Processo` e `TipoProcesso`.
+    - Servi├ºos com l├│gica de neg├│cio centralizada e gera├º├úo de numera├º├úo.
+    - Controllers Web para gest├úo administrativa.
 - **Interface**:
-    - Telas de listagem, criação e edição com design premium Dark Mode.
-    - Integração no sidebar principal.
+    - Telas de listagem, cria├º├úo e edi├º├úo com design premium Dark Mode.
+    - Integra├º├úo no sidebar principal.
 
 ---
 
 ## [v1.2.0] - 2026-05-09
 ### Adicionado
-- **Centralização de Recursos**: Implementação de `public/dist/css/style.css` e módulos JS em `public/dist/js/app/`.
-- **Acessibilidade (A11y)**:
-    - Suporte a navegação por teclado com `:focus-visible`.
-    - Labels de acessibilidade (`aria-label`) em todos os elementos de ação.
-    - Suporte a eventos de teclado para elementos não-semânticos.
-- **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
-- **Micro-UX e Feedback**:
-    - Indicadores visuais de campos obrigatórios via CSS (`.form-label-required`).
-    - Atributos `aria-current` para melhor feedback de navegação.
-    - `role="alert"` para notificações dinâmicas.
+- **M├│dulo de Documentos (Fase 1 - PDF)**:
+    - Implementa├º├úo do CRUD de documentos vinculados a processos.
+    - Suporte a upload de arquivos PDF com armazenamento local seguro (`storage/app/documentos`).
+    - Visualiza├º├úo de PDFs diretamente no navegador e op├º├úo de download.
+    - Gera├º├úo de numera├º├úo de documentos (`DOC-NNNNNNNN`).
+    - Identifica├º├úo opaca e segura usando **UUIDs** gerados automaticamente no banco de dados.
+    - Controle de n├¡vel de acesso por documento (P├║blico, Restrito, Sigiloso).
+- **Camada MVCRS Expandida**:
+    - `DocumentoRepository` e `DocumentoService` para gest├úo de arquivos e metadados com suporte a `findByUuid`.
+    - Controller Web para integra├º├úo com a interface de processos.
+- **Interface**:
+    - Tela de upload premium com suporte a drag-and-drop (visual).
+    - Listagem de documentos integrada ├á tela de detalhes do processo.
+    - **Visualizador de Processo (Folheador)**: Nova tela com barra lateral que permite "folhear" todos os documentos de um processo de forma fluida.
 
 ---
-*Assinado por: Jules (Palette)*
+*Assinado por: Antigravity AI*
