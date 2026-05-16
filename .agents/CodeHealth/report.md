@@ -21,8 +21,14 @@
 - Updated all callers in `UserController` (Api and Web) and `ProcessoController`.
 
 ### 4. Error Handling and Documentation
-- Improved error handling in `UserService::findById` by throwing `ModelNotFoundException` when a user is not found.
-- Added comprehensive DocBlocks to all modified service classes, repository classes, and controllers to improve code maintainability and IDE support.
+- Improved error handling in `UserService::findById`, `ProcessoService::findById`, and `TipoProcessoService::findById` by throwing `ModelNotFoundException` when a record is not found.
+- Added comprehensive DocBlocks and return type hints to all methods in the service and repository layers to improve code maintainability and IDE support.
+
+### 5. Movement Tracking Robustness
+- Implemented `getSystemUserId()` in `ProcessoService` to ensure a valid user ID is always used when recording process movements, even in non-interactive contexts (like CLI or seeding), by providing a fallback to the administrative user.
+
+### 6. Query Optimization (SARGability)
+- Refactored `ProcessoRepository::getLatestProcessNumber` to use SARGable date range comparisons (`>=` and `<=`) instead of the `whereYear()` function. This ensures that the database can efficiently use indexes on the `data_abertura` column.
 
 ## Conclusion
-These changes significantly improve the codebase's maintainability, readability, and adherence to best practices and Laravel standards.
+These changes significantly improve the codebase's maintainability, robustness, and performance by adhering to best practices, ensuring consistent error handling, and optimizing database interactions.

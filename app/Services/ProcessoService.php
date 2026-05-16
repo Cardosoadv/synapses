@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Processo;
+use App\Models\User;
 use App\Repositories\Contracts\MovimentacaoRepositoryInterface;
 use App\Repositories\Contracts\ProcessoRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -38,12 +41,27 @@ class ProcessoService
     }
 
     /**
+     * Get the ID of the user to be recorded in movements.
+     *
+     * @return int|null
+     */
+    protected function getSystemUserId(): ?int
+    {
+        if (Auth::check()) {
+            return Auth::id();
+        }
+
+        $admin = User::where('email', 'admin@synapses.com')->first();
+        return $admin ? $admin->id : null;
+    }
+
+    /**
      * List all processes with optional filters.
      *
      * @param array $filters
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function listAll(array $filters = [])
+    public function listAll(array $filters = []): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->repository->paginate(15, $filters);
     }
@@ -52,20 +70,27 @@ class ProcessoService
      * Find a process by ID.
      *
      * @param int $id
-     * @return \App\Models\Processo|null
+     * @return \App\Models\Processo
+     * @throws ModelNotFoundException
      */
-    public function findById(int $id)
+    public function findById(int $id): Processo
     {
-        return $this->repository->findById($id);
+        $processo = $this->repository->findById($id);
+
+        if (!$processo) {
+            throw (new ModelNotFoundException())->setModel(Processo::class, [$id]);
+        }
+
+        return $processo;
     }
 
     /**
      * Create a new process.
      *
      * @param array $data
-     * @return \App\Models\Processo
+     * @return Processo
      */
-    public function create(array $data)
+    public function create(array $data): Processo
     {
         return DB::transaction(function () use ($data) {
             $data['numero'] = $this->generateProcessNumber();
@@ -76,7 +101,7 @@ class ProcessoService
 
             $this->movimentacaoRepository->create([
                 'processo_id' => $processo->id,
-                'user_id' => Auth::id(),
+                'user_id' => $this->getSystemUserId(),
                 'status_anterior' => null,
                 'status_novo' => 'aberto',
                 'observacao' => 'Abertura do processo.'
@@ -91,12 +116,13 @@ class ProcessoService
      *
      * @param int $id
      * @param array $data
-     * @return \App\Models\Processo
+     * @return Processo
+     * @throws ModelNotFoundException
      */
-    public function update(int $id, array $data)
+    public function update(int $id, array $data): Processo
     {
         return DB::transaction(function () use ($id, $data) {
-            $processo = $this->repository->findById($id);
+            $processo = $this->findById($id);
             $oldStatus = $processo->status;
 
             if (isset($data['status']) && $data['status'] === 'concluido') {
@@ -108,7 +134,7 @@ class ProcessoService
             if (isset($data['status']) && $data['status'] !== $oldStatus) {
                 $this->movimentacaoRepository->create([
                     'processo_id' => $id,
-                    'user_id' => Auth::id(),
+                    'user_id' => $this->getSystemUserId(),
                     'status_anterior' => $oldStatus,
                     'status_novo' => $data['status'],
                     'observacao' => 'Alteração de status do processo.'
@@ -125,7 +151,7 @@ class ProcessoService
      * @param int $id
      * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         return $this->repository->delete($id);
     }
@@ -135,7 +161,7 @@ class ProcessoService
      *
      * @return string
      */
-    protected function generateProcessNumber()
+    protected function generateProcessNumber(): string
     {
         $year = Carbon::now()->year;
         $latestNumber = $this->repository->getLatestProcessNumber($year);
