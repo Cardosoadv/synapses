@@ -34,7 +34,9 @@ class ProcessoRepository extends BaseRepository implements ProcessoRepositoryInt
      */
     public function getLatestProcessNumber(int $year): ?string
     {
-        $latest = $this->model->whereYear('data_abertura', $year)
+        $latest = $this->model
+            ->where('data_abertura', '>=', "{$year}-01-01 00:00:00")
+            ->where('data_abertura', '<=', "{$year}-12-31 23:59:59")
             ->orderBy('numero', 'desc')
             ->first();
             
