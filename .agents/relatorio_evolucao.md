@@ -48,4 +48,13 @@
 - **Refatoração de UI**: Substituição de estilos inline por classes semânticas centralizadas, melhorando a performance de cache e manutenção.
 
 ---
+
+## [v1.3.0] - 2026-05-10
+### Otimizado
+- **Performance de Consultas**:
+    - **Resolução de N+1**: Implementação de carregamento ansioso (eager loading) para o histórico de movimentações, reduzindo drasticamente o número de consultas na visualização de detalhes do processo.
+    - **Consultas SARGable**: Refatoração da busca por numeração de processo para utilizar intervalos de datas em vez de funções de extração de ano, permitindo que o banco de dados utilize índices de forma eficiente.
+- **Suite de Testes**: Adição de testes de performance automatizados para garantir a manutenção das otimizações.
+
+---
 *Assinado por: Antigravity AI*

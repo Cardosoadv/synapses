@@ -26,7 +26,7 @@ class ProcessoRepository extends BaseRepository implements ProcessoRepositoryInt
      */
     public function findById(int $id): ?Model
     {
-        return $this->model->with(['tipoProcesso', 'interessado'])->find($id);
+        return $this->model->with(['tipoProcesso', 'interessado', 'movimentacoes.user'])->find($id);
     }
 
     /**
@@ -34,7 +34,8 @@ class ProcessoRepository extends BaseRepository implements ProcessoRepositoryInt
      */
     public function getLatestProcessNumber(int $year): ?string
     {
-        $latest = $this->model->whereYear('data_abertura', $year)
+        $latest = $this->model->where('data_abertura', '>=', "{$year}-01-01 00:00:00")
+            ->where('data_abertura', '<', ($year + 1) . "-01-01 00:00:00")
             ->orderBy('numero', 'desc')
             ->first();
             
