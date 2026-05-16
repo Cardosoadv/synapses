@@ -62,6 +62,10 @@
 .table-empty { text-align: center; padding: 3rem; color: var(--text-muted); }
 .td-main { font-weight: 500; }
 .td-sub { font-size: 0.75rem; color: var(--text-muted); }
+.fs-0-85 { font-size: 0.85rem; }
+.mt-0-25 { margin-top: 0.25rem; }
+.w-auto { width: auto; }
+.px-3 { padding-left: 3rem; padding-right: 3rem; }
 .td-numero { font-weight: 700; color: var(--primary); }
 .td-assunto { font-size: 0.875rem; }
 .td-acesso { font-size: 0.75rem; text-transform: uppercase; }
@@ -73,6 +77,7 @@
 .pagination-border { padding: 1rem; border-top: 1px solid var(--border); }
 
 /* Detail Views */
+.container-800 { max-width: 800px; margin: 0 auto; }
 .container-narrow { max-width: 900px; margin: 0 auto; }
 .container-wide { max-width: 1000px; margin: 0 auto; }
 .back-link { color: var(--text-muted); text-decoration: none; margin-bottom: 1rem; display: inline-block; }
@@ -123,3 +128,44 @@ a:focus-visible {
 
 /* Custom styles for components */
 .toggle-status-btn { background: none; border: none; padding: 0; cursor: pointer; }
+
+/* Utility Classes */
+.w-150 { width: 150px; }
+.w-200 { width: 200px; }
+.w-full { width: 100%; }
+.max-w-400 { max-width: 400px; }
+.max-w-800 { max-width: 800px; }
+.h-45 { height: 45px; }
+.h-screen { height: 100vh; }
+
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-0-5 { margin-bottom: 0.5rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-1-5 { margin-bottom: 1.5rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+.p-1-5 { padding: 1.5rem; }
+.p-2 { padding: 2rem; }
+.p-2-5 { padding: 2.5rem; }
+
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-end-gap-1 { display: flex; justify-content: flex-end; gap: 1rem; }
+.align-center { align-items: center; }
+.text-center { text-align: center; }
+.text-primary { color: var(--primary); }
+.text-muted { color: var(--text-muted); }
+
+.fs-0-75 { font-size: 0.75rem; }
+.fs-0-875 { font-size: 0.875rem; }
+.fs-1 { font-size: 1rem; }
+.fs-1-5 { font-size: 1.5rem; }
+.fw-300 { font-weight: 300; }
+
+.login-bg { background: radial-gradient(circle at top right, #1e293b, #0f172a); }
+.bg-dark-select { background: var(--bg-card); }
+
+.form-label-required::after {
+    content: " *";
+    color: var(--danger);
+}

@@ -7,7 +7,7 @@
     <a href="{{ route('usuarios.index') }}" class="back-link">
         <i class="bi bi-arrow-left"></i> Voltar para a listagem
     </a>
-    <h1 style="margin: 0.5rem 0 0 0;">{{ isset($usuario) ? 'Editar Usuário' : 'Criar Novo Usuário' }}</h1>
+    <h1 class="mt-0-25">{{ isset($usuario) ? 'Editar Usuário' : 'Criar Novo Usuário' }}</h1>
 </div>
 
 <form action="{{ isset($usuario) ? route('usuarios.update', $usuario->id) : route('usuarios.store') }}" method="POST">
@@ -19,7 +19,7 @@
             <h3 class="card-title-small">Dados Pessoais</h3>
             
             <div class="form-group">
-                <label class="form-label">Nome Completo</label>
+                <label class="form-label-required form-label">Nome Completo</label>
                 <input type="text" name="name" class="form-control" value="{{ old('name', $usuario->name ?? '') }}" required>
             </div>
 
@@ -38,12 +38,12 @@
             <h3 class="card-title-small">Acesso e Perfil</h3>
 
             <div class="form-group">
-                <label class="form-label">E-mail Corporativo</label>
+                <label class="form-label-required form-label">E-mail Corporativo</label>
                 <input type="email" name="email" class="form-control" value="{{ old('email', $usuario->email ?? '') }}" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Perfil de Acesso</label>
+                <label class="form-label-required form-label">Perfil de Acesso</label>
                 <select name="role" class="form-control">
                     <option value="user" {{ old('role', $usuario->role ?? '') == 'user' ? 'selected' : '' }}>Colaborador (User)</option>
                     <option value="manager" {{ old('role', $usuario->role ?? '') == 'manager' ? 'selected' : '' }}>Gestor (Manager)</option>
@@ -52,20 +52,20 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">{{ isset($usuario) ? 'Nova Senha (deixe em branco para manter)' : 'Senha de Acesso' }}</label>
+                <label class="{{ isset($usuario) ? 'form-label' : 'form-label-required form-label' }}">{{ isset($usuario) ? 'Nova Senha (deixe em branco para manter)' : 'Senha de Acesso' }}</label>
                 <input type="password" name="password" class="form-control" {{ isset($usuario) ? '' : 'required' }}>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Confirmar Senha</label>
+                <label class="{{ isset($usuario) ? 'form-label' : 'form-label-required form-label' }}">Confirmar Senha</label>
                 <input type="password" name="password_confirmation" class="form-control" {{ isset($usuario) ? '' : 'required' }}>
             </div>
         </div>
     </div>
 
-    <div class="td-actions td-actions-end" style="margin-top: 2rem;">
+    <div class="td-actions td-actions-end mt-2">
         <a href="{{ route('usuarios.index') }}" class="btn btn-outline">Cancelar</a>
-        <button type="submit" class="btn btn-primary" style="padding-left: 3rem; padding-right: 3rem;">
+        <button type="submit" class="btn btn-primary px-3">
             {{ isset($usuario) ? 'Salvar Alterações' : 'Criar Usuário' }}
         </button>
     </div>
